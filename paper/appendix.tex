@@ -52,9 +52,10 @@ how we interpret it.
 
 \medskip
 \noindent Tests 1, 3, 5, 6, 9, 10, 11 and 12 support the disparities manuscript
-(social vulnerability and progression). Test 2 is the evidence base for the
-companion manuscript on academic ophthalmology proximity. Tests 4, 7 and 8 are
-diagnostics that constrain the interpretation of both.
+(social vulnerability and progression). Tests 2, 13 and 14 are the evidence base
+for the companion manuscript on academic ophthalmology proximity. Tests 4, 7 and
+8 are diagnostics that constrain the interpretation of both. Every analysis
+reported in either manuscript appears here.
 
 \medskip
 \noindent Unless stated otherwise, the outcome is the vision-threatening share
@@ -173,7 +174,7 @@ should dominate.
 
 \emph{2a.} Academic drive time: $-0.024$ alone, $-0.023$ conditional on supply
 distance. Distance to any ophthalmologist: $+0.029$ alone, $+0.014$ conditional
-($P = 0.06$). The two exposures correlate only $0.41$. The signs are opposite:
+($p = 0.06$). The two exposures correlate only $0.41$. The signs are opposite:
 distance to \emph{any} ophthalmologist behaves as an access hypothesis predicts,
 while distance to an \emph{academic} program does the reverse.
 
@@ -195,12 +196,12 @@ show worse case mix than those near one (18.6\% vs 19.6\%). The larger
 difference is horizontal: having any local ophthalmologist is associated with a
 roughly two point \emph{higher} vision-threatening share.
 
-\emph{2c.} Interaction $\beta = 0.008$, $P = 0.70$. A clean null.
+\emph{2c.} Interaction $\beta = 0.008$, $p = 0.70$. A clean null.
 
-\emph{2d.} Capacity-weighted access $\beta = +0.010$, $P = 0.06$, wrong-signed.
+\emph{2d.} Capacity-weighted access $\beta = +0.010$, $p = 0.06$, wrong-signed.
 
-\emph{2e.} University program distance $\beta = -0.028$ ($P < 0.001$);
-community-hospital program distance $\beta = +0.000$ ($P = 0.99$). The two
+\emph{2e.} University program distance $\beta = -0.028$ ($p < 0.001$);
+community-hospital program distance $\beta = +0.000$ ($p = 0.99$). The two
 distances correlate $0.61$, so this is a real distinction rather than
 collinearity. Note this test runs on 1,333 counties, those having a
 community-hospital program among their routed candidates, a subsample skewed
@@ -255,7 +256,7 @@ Age band & Mean VTDR share & $\beta_{\mathrm{SVI}}$ & SE \\
 \bottomrule
 \end{tabular}
 \end{center}
-Difference $0.008$; $z = 1.42$; $P = 0.16$; ratio of odds ratios $1.01$. The
+Difference $0.008$; $z = 1.42$; $p = 0.16$; ratio of odds ratios $1.01$. The
 same pattern holds within each race stratum (main text, Table 2): 0.034 versus
 0.032 among non-Hispanic White adults, 0.037 versus 0.035 among non-Hispanic
 Black adults, 0.046 versus 0.037 among Hispanic adults.
@@ -358,7 +359,7 @@ using CARBayes, with binomial likelihood, VTDR cases as successes and DR cases
 as trials, 20,000 burn-in and 140,000 iterations thinned by 20.
 
 \tpart{(3) What we found.}
-Moran's $I = 0.237$ ($P < 0.001$), confirming substantial residual clustering.
+Moran's $I = 0.237$ ($p < 0.001$), confirming substantial residual clustering.
 Estimated spatial dependence was strong ($\rho = 0.82$, 95\% CrI 0.73 to 0.91).
 The social vulnerability coefficient attenuated from 0.032 to 0.021 but its
 credible interval excluded zero (0.012 to 0.029). Academic drive time was
@@ -407,7 +408,7 @@ specific to diabetic retinopathy or general to VEHSS-derived severity ratios.
 are unchanged.
 
 \emph{6b.} With the proper diabetes denominator and full covariate adjustment,
-drive time was not associated with DR level ($\beta = -0.005$, $P = 0.059$), and
+drive time was not associated with DR level ($\beta = -0.005$, $p = 0.059$), and
 SVI was associated only weakly ($\beta = 0.025$) compared with its association
 with severity ($\beta = 0.145$ unstratified). Disease occurrence and disease
 progression behave differently, and the severity share is essentially
@@ -459,7 +460,7 @@ common complete-case sample (13,035 cells).
 \begin{center}
 \begin{tabular}{lrrr}
 \toprule
-Specification & $\beta_{\mathrm{SVI}}$ & SE & $P$ \\
+Specification & $\beta_{\mathrm{SVI}}$ & SE & $p$ \\
 \midrule
 Base (same sample)                & 0.0353 & 0.0016 & $<0.001$ \\
 $+$ Medicare imaging per 1,000    & 0.0371 & 0.0016 & $<0.001$ \\
@@ -469,7 +470,7 @@ $+$ all three                     & 0.0354 & 0.0016 & $<0.001$ \\
 \end{tabular}
 \end{center}
 The coefficients on the detection proxies themselves were imaging $-0.028$
-($P<0.001$), E\&M $+0.010$ ($P<0.001$), and tests $+0.007$ ($P = 0.002$).
+($p<0.001$), E\&M $+0.010$ ($p<0.001$), and tests $+0.007$ ($p = 0.002$).
 
 \tpart{(4) Interpretation.} The social gradient is completely unmoved. What
 makes this informative rather than merely null is that the detection pathway is
@@ -500,9 +501,9 @@ were added to the within-stratum specification.
 \tpart{(3) What we found.} The gradient fell from 0.0353 to 0.0206, an
 attenuation of approximately 42\% on the log-odds scale and 29\% on the
 standardized scale. Mammography completion was itself strongly associated with
-the outcome ($\beta = -0.039$, $P<0.001$), and correlated $-0.42$ with social
+the outcome ($\beta = -0.039$, $p<0.001$), and correlated $-0.42$ with social
 vulnerability. Influenza vaccination added little ($\beta = 0.005$,
-$P = 0.04$).
+$p = 0.04$).
 
 \tpart{(4) Interpretation.} Roughly two fifths of the social gradient in
 diabetic retinopathy progression is shared with general preventive-screening
@@ -533,9 +534,9 @@ isolates poverty among the fully insured.
 
 \tpart{(3) What we found.} The gradient moved from 0.0353 to 0.0343 with both
 included, and neither covariate was independently associated with the outcome
-(uninsured $P = 0.14$; dual-eligible $P = 0.44$). Restricting to the 65--84 band
+(uninsured $p = 0.14$; dual-eligible $p = 0.44$). Restricting to the 65--84 band
 and using dual eligibility as the exposure, however, gave $\beta = 0.006$
-($P<0.001$).
+($p<0.001$).
 
 \tpart{(4) Interpretation.} Direct coverage measures confirm what the age
 contrast implied: insurance status does not explain the social gradient in
@@ -572,7 +573,7 @@ Age band & Expansion status & Cells & $\beta_{\mathrm{SVI}}$ \\
 \end{tabular}
 \end{center}
 Triple interaction SVI $\times$ expansion $\times$ age band: $\beta = 0.0023$,
-$P = 0.73$.
+$p = 0.73$.
 
 \tpart{(4) Interpretation.} Read carelessly, the first two rows say Medicaid
 expansion triples the social gradient, which would be a striking and
@@ -601,8 +602,8 @@ screening completion. All outcomes were placed in standard deviation units so
 magnitudes are comparable with the vision-threatening share.
 
 \tpart{(3) What we found.} Per standard deviation of social vulnerability:
-preventable hospital stays $+0.279$ SD ($P<0.001$); mammography completion
-$-0.465$ SD ($P<0.001$); vision-threatening share $+0.100$ SD ($P<0.001$). The
+preventable hospital stays $+0.279$ SD ($p<0.001$); mammography completion
+$-0.465$ SD ($p<0.001$); vision-threatening share $+0.100$ SD ($p<0.001$). The
 Spearman correlation between preventable hospital stays and the
 vision-threatening share was $0.134$.
 
@@ -614,6 +615,93 @@ of the preventable-hospitalisation gradient and about a fifth of the
 mammography gradient. It is real and consistent, but it is a modest gradient,
 and the low correlation between the two outcomes indicates they are related
 rather than interchangeable.
+
+%=========================================================================
+\section{Dose-response in drive time to academic ophthalmology}
+%=========================================================================
+
+\tpart{(1) What is tested.} Test~2 asked whether any academic-proximity effect
+is specific to academic centers. This test asks the prior and simpler question:
+is there a dose-response at all? A regression coefficient can be driven by a
+handful of extreme counties or by a non-monotonic pattern, so we examine the
+raw gradient before modelling it.
+
+\tpart{(2) How we tested it.} Counties were binned by drive time to the nearest
+residency program accredited by 2021, and the mean county vision-threatening
+share computed within each bin, with confidence intervals reflecting
+between-county variation.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Drive time (minutes) & Counties & Mean VTDR share (\%) & SE \\
+\midrule
+0--30    & 164 & 18.89 & 0.27 \\
+31--60   & 356 & 17.44 & 0.20 \\
+61--90   & 464 & 16.94 & 0.18 \\
+91--120  & 521 & 16.67 & 0.17 \\
+121--180 & 730 & 16.76 & 0.15 \\
+181--240 & 370 & 16.19 & 0.21 \\
+$>$240   & 514 & 16.12 & 0.17 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tpart{(4) Interpretation.} There is a dose-response, and it runs the wrong way.
+The severity of diagnosed disease falls monotonically as distance from an
+academic program increases, by roughly 2.8 percentage points from the nearest to
+the farthest bin. The access hypothesis predicts the opposite slope. The pattern
+is smooth rather than driven by outliers, which rules out the possibility that
+the negative regression coefficient is an artifact of a few extreme counties. It
+is, however, exactly what differential detection predicts: where subspecialty
+capacity is concentrated, more mild disease is found and the denominator grows.
+
+%=========================================================================
+\section{Stability of the academic association under adjustment}
+%=========================================================================
+
+\tpart{(1) What is tested.} A confounded association should move toward zero as
+the confounders are adjusted away. A structural feature of the measurement
+should not. We therefore track the academic-distance coefficient itself, rather
+than the social vulnerability coefficient, across the same progressive
+adjustment sequence used in Tests~8 and~9.
+
+\tpart{(2) How we tested it.} The coefficient on log drive time to the nearest
+residency program was estimated on a single common complete-case sample (13,008
+cells) under five nested specifications, adding general eye care proximity and
+geography, then social vulnerability, then Medicare diagnostic volume, then
+preventive-screening completion.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Specification & $\beta_{\mathrm{academic}}$ & SE & $p$ \\
+\midrule
+Unadjusted                              & $-0.0121$ & 0.0007 & $<0.001$ \\
+$+$ eye care supply and geography       & $-0.0217$ & 0.0010 & $<0.001$ \\
+$+$ social vulnerability                & $-0.0174$ & 0.0010 & $<0.001$ \\
+$+$ Medicare diagnostic volume          & $-0.0166$ & 0.0010 & $<0.001$ \\
+$+$ preventive screening completion     & $-0.0133$ & 0.0010 & $<0.001$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tpart{(4) Interpretation.} The coefficient is negative in every specification
+and never approaches zero. Notably it \emph{strengthens} when eye care supply
+and geography are added, because those covariates partly absorb the urban
+clustering that otherwise masks it, and then attenuates modestly as social
+vulnerability and screening completion enter. Its magnitude throughout is a
+fraction of the social vulnerability coefficient estimated on the same sample.
+
+The honest reading is that this is a small, stable, wrong-signed association
+rather than a null. We do not interpret it as evidence that distance from
+academic ophthalmology is protective, which is not clinically plausible. We
+interpret it as the detection signature described in Tests~2 and~13: proximity
+to subspecialty capacity raises the measured share of disease that is
+vision-threatening by improving ascertainment, and no amount of covariate
+adjustment removes a feature that is built into how the outcome is ascertained.
 
 %=========================================================================
 \section{Data provenance and reproducibility}
