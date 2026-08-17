@@ -43,20 +43,6 @@ Department of Ophthalmology}
 \begin{document}
 \maketitle
 
-\noindent\textbf{Running head:} Social vulnerability and diabetic retinopathy progression
-
-\noindent\textbf{Keywords:} diabetic retinopathy; vision-threatening diabetic
-retinopathy; social vulnerability; disease progression; health services research;
-spatial epidemiology
-
-\bigskip
-
-\noindent\textbf{Pr\'ecis:} Among United States adults with diagnosed diabetic
-retinopathy, the proportion whose disease had reached a vision-threatening stage
-increased with county social vulnerability. The gradient was consistent across
-racial and ethnic groups, was not narrower among Medicare-eligible adults, and
-persisted after spatial adjustment.
-
 \clearpage
 
 %=========================================================================
@@ -158,8 +144,23 @@ higher prevalence of diabetes itself in disadvantaged populations, it says
 comparatively little about the quality or timeliness of ophthalmic care those
 populations receive.
 
-The unresolved question is whether social disadvantage is associated with how
-far disease has advanced \emph{among people who already have it}. That quantity,
+Recent work has begun to address disease severity directly. Xie and colleagues,
+studying 73,618 patients with diabetes at two academic centers, found that
+residents of more deprived neighborhoods had substantially higher odds of
+proliferative diabetic retinopathy, with a clear dose-response across quartiles
+of the Area Deprivation Index.\citep{xie2025} That study establishes the
+gradient in a large clinical population. Three questions it could not address
+motivate the present analysis. Its sample consists of patients attending
+tertiary referral centers, so its generalizability to the national population is
+unknown, as the authors note. Its outcome is proliferative disease among all
+patients with diabetes, which combines whether retinopathy developed at all with
+how far it progressed. And, as the authors also note, it could not adjust for
+neighborhood diabetes prevalence, leaving open whether the gradient reflects
+more diabetes or worse control of it.
+
+The unresolved question is therefore whether social disadvantage is associated
+with how far disease has advanced \emph{among people who already have it},
+in the general population rather than among referral-center attendees. That quantity,
 the share of diagnosed DR that is vision-threatening, is a case-mix measure
 rather than a burden measure. It is conditioned on disease, so it is largely
 orthogonal to diabetes prevalence, and it speaks directly to the adequacy of
@@ -449,6 +450,15 @@ Median drive time to the nearest ophthalmology residency program was 123 minutes
 contained a program. Notably, 1,950 of 3,119 counties (62.5\%) contained no
 patient-care ophthalmologist of any kind.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/figB4_map.pdf}
+\caption{Geographic distribution of the vision-threatening share of diagnosed
+diabetic retinopathy. This is a case-mix measure and is nearly uncorrelated with
+diabetic retinopathy prevalence itself (Spearman $\rho = -0.08$).}
+\label{fig:map}
+\end{figure}
+
 \subsection{Post-stratification accounts for most of the apparent social gradient}
 
 Estimated without holding demographic composition fixed, each standard deviation
@@ -461,6 +471,14 @@ attributable to demographic post-stratification rather than to local variation
 
 This has direct implications for the interpretation of prior and future work
 using these widely used county estimates, and we return to it in the Discussion.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/figB1_artifact.pdf}
+\caption{The social vulnerability coefficient before and after holding county
+demographic composition fixed.}
+\label{fig:artifact}
+\end{figure}
 
 \subsection{Social vulnerability and disease progression}
 
@@ -477,6 +495,14 @@ to 64, and was statistically significant in every stratum
 (Table~\ref{tab:strata}). That the same association appears at similar magnitude
 in three racial and ethnic groups and two age bands argues against its being an
 artifact of any single population.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/figB2_strata.pdf}
+\caption{Social vulnerability coefficient estimated separately within each
+race-by-age stratum.}
+\label{fig:strata}
+\end{figure}
 
 \subsection{The gradient is not narrowed by Medicare eligibility}
 
@@ -538,6 +564,16 @@ vision-threatening share of diabetic retinopathy
 ($\beta = -0.039$, $P<0.001$). Social vulnerability and mammography completion
 were correlated at $-0.42$. Influenza vaccination added little beyond
 mammography.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/figB3_mechanism.pdf}
+\caption{Social vulnerability coefficient after adding each set of external
+covariates on a common sample. Insurance coverage and diagnostic volume leave
+the gradient intact; preventive-screening completion absorbs roughly two fifths
+of it.}
+\label{fig:mechanism}
+\end{figure}
 
 \subsection{Direct measures of coverage do not explain the gradient}
 
@@ -768,6 +804,22 @@ influenced by access to ophthalmologists and that their model may mistake such
 factors for true variation in prevalence.\citep{lundeen2023} A full account of
 these tests is given in the Appendix.
 
+Our findings both corroborate and refine the clinic-based evidence. Xie et al.
+reported a dose-response between neighborhood deprivation and proliferative
+disease among referral-center patients.\citep{xie2025} We reproduce a social
+gradient in disease severity at national population scale, which is meaningful
+corroboration given the different sampling frame. We depart from that work in
+three respects. Conditioning on the presence of diabetic retinopathy separates
+progression from occurrence, and we find the gradient in progression to be
+several times that in occurrence among people with diabetes, so the two are not
+interchangeable. Using the diabetes population as the explicit denominator
+addresses the confounding by neighborhood diabetes prevalence that the earlier
+study identified as an open limitation. And whereas that study found greater
+distance from the ophthalmology clinic associated with proliferative disease, we
+find no population-level counterpart; we take up that divergence, and the
+referral selection that most plausibly explains it, in a companion analysis of
+academic ophthalmology proximity using the same data.
+
 Our second contribution is methodological and applies to any study using VEHSS
 county estimates. Because those estimates are constructed by post-stratifying
 national demographic-specific rates onto local composition, a county's racial
@@ -917,6 +969,11 @@ on eye care utilization in a national sample of people with diabetes.
 US Census Bureau. Centers of Population by County, 2020 Census. Available at
 \url{https://www2.census.gov/geo/docs/reference/cenpop2020/}. Accessed August
 2026.
+
+\bibitem[Xie et al.(2025)]{xie2025}
+Xie WY, Rustam Z, Tran D, et al. Association of neighborhood socioeconomic
+disadvantage with proliferative diabetic retinopathy. \emph{Ophthalmol Retina.}
+2025;9(2):e1--e9. doi:10.1016/j.oret.2024.10.012
 
 \bibitem[Weng et al.(2024)]{weng2024}
 Weng CY, Maguire MG, Flaxel CJ, et al. Effectiveness of conventional digital
