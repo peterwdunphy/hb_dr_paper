@@ -1,0 +1,28 @@
+# Raw downloads (~250MB). Every file here is re-fetched from a public
+# endpoint by the numbered scripts in R/, so none of it needs versioning.
+data/
+
+# Regenerable derived artifacts.
+# counties_2021.gpkg is rebuilt by 05_centroids.R via tigris.
+data_derived/counties_2021.gpkg
+# routing checkpoints
+data_derived/*.rds
+# CARBayes fit object, 267MB, over GitHub's 100MB per-file limit
+output/*.rds
+
+# Secrets and local R state
+.Renviron
+.Rhistory
+.RData
+.Rproj.user/
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+
+.DS_Store

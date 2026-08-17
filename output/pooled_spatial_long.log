@@ -1,0 +1,74 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Stratum-level cells: 13077 over 3124 counties
+Analytic cells: 13035 | strata: 6
+
+===== PRIMARY MODEL: within-stratum social gradient in DR progression =====
+            Estimate Std. Error   t value Pr(>|t|)
+(Intercept)  -1.0803     0.0040 -270.6264   0.0000
+z_svi         0.0353     0.0016   22.0644   0.0000
+z_acad       -0.0174     0.0010  -16.7664   0.0000
+z_supply     -0.0018     0.0028   -0.6398   0.5223
+z_ophth      -0.0072     0.0017   -4.3758   0.0000
+z_optom      -0.0113     0.0023   -4.8667   0.0000
+z_popdens    -0.0405     0.0022  -18.1827   0.0000
+z_rucc       -0.0584     0.0032  -18.4191   0.0000
+dispersion: 1.93
+
+SVI: OR = 1.0359 per SD; 14.17% -> 14.60% (0.43 pp per SD)
+Composition-contaminated 'All races' estimate was +0.1460; within-stratum estimate is +0.0353 (76% of it was artifact)
+
+===== Gradient by stratum (consistency check) =====
+                          stratum    n beta_svi       se         p beta_acad
+1 Black, non-Hispanic 40-64 years 1799  0.03715 0.004942 8.803e-14  -0.01431
+2 Black, non-Hispanic 65-84 years 1533  0.03542 0.005556 2.417e-10  -0.01428
+3  Hispanic, any race 40-64 years 2060  0.04630 0.004345 7.585e-26  -0.01992
+4  Hispanic, any race 65-84 years 1441  0.03700 0.005545 3.578e-11  -0.02040
+5 White, non-Hispanic 40-64 years 3096  0.03420 0.003038 7.734e-29  -0.01539
+6 White, non-Hispanic 65-84 years 3106  0.03201 0.003048 2.239e-25  -0.01595
+     p_acad
+1 1.149e-06
+2 8.288e-06
+3 1.699e-19
+4 2.086e-15
+5 6.217e-11
+6 1.910e-11
+
+===== SPATIAL MODEL (CARBayes, Leroux CAR, binomial) =====
+Warning message:
+package ‘Rcpp’ was built under R version 4.6.1 
+Warning messages:
+1: In poly2nb(shp, queen = TRUE) : some observations have no neighbours;
+if this seems unexpected, try increasing the snap argument.
+2: In poly2nb(shp, queen = TRUE) : neighbour object has 6 sub-graphs;
+if this sub-graph count seems unexpected, try increasing the snap argument.
+Counties with no queen neighbour (islands): 3
+  islands linked to nearest county so the adjacency graph is connected
+Warning message:
+In st_point_on_surface.sfc(st_geometry(shp)) :
+  st_point_on_surface may not give correct results for longitude/latitude data
+Moran's I on non-spatial residuals: I = 0.2371, p = 9.19e-107
+Warning message:
+In mat2listw(W, style = "B") : neighbour object has 3 sub-graphs
+               Mean    2.5%   97.5% n.sample % accept n.effective Geweke.diag
+(Intercept) -1.8110 -1.8171 -1.8048     6000     45.4      2364.9        -0.4
+z_svi        0.0206  0.0115  0.0293     6000     45.4      1076.2         1.2
+z_acad      -0.0097 -0.0191 -0.0007     6000     45.4       575.9         0.8
+z_supply     0.0063 -0.0050  0.0172     6000     45.4       722.7         1.3
+z_ophth     -0.0031 -0.0126  0.0061     6000     45.4       997.0         0.5
+z_optom     -0.0135 -0.0225 -0.0047     6000     45.4      1781.3        -1.0
+z_popdens   -0.0028 -0.0203  0.0147     6000     45.4       420.3         1.3
+z_rucc      -0.0201 -0.0324 -0.0072     6000     45.4       862.6        -0.5
+tau2         0.0458  0.0408  0.0514     6000    100.0      3832.3         0.3
+rho          0.8265  0.7281  0.9112     6000     44.9      2294.8        -0.5
+
+Wrote output/gradient_by_stratum.csv and output/carbayes_whiteNH6584.rds

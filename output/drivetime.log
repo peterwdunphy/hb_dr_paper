@@ -1,0 +1,80 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Counties: 3221   Programs (accredited <=2021): 123
+Pairs to route: 24520 (of 396183 possible)
+  10 requests, 1.7 min elapsed
+  40 requests, 5.2 min elapsed
+  60 requests, 8.5 min elapsed
+  80 requests, 11.8 min elapsed
+  100 requests, 14.7 min elapsed
+  120 requests, 17.8 min elapsed
+  140 requests, 20.7 min elapsed
+  160 requests, 23.6 min elapsed
+  180 requests, 26.1 min elapsed
+  200 requests, 29.0 min elapsed
+  220 requests, 31.8 min elapsed
+  240 requests, 34.7 min elapsed
+  260 requests, 37.6 min elapsed
+  280 requests, 40.3 min elapsed
+  300 requests, 43.0 min elapsed
+Routed pairs: 24520   unroutable (NA): 19589
+Counties with a drive time: 1366 / 3221
+Counties with NO routable program (island/remote):
+# A tibble: 39 × 2
+   state                    n
+   <chr>                <int>
+ 1 Alabama                 67
+ 2 Alaska                  27
+ 3 Arkansas                75
+ 4 Colorado                56
+ 5 Connecticut              8
+ 6 Delaware                 3
+ 7 District of Columbia     1
+ 8 Florida                 6  300 requests, 43.0 min elapsed
+Routed pairs: 24520   unroutable (NA): 19589
+Counties with a drive time: 1366 / 3221
+Counties with NO routable program (island/remote):
+# A tibble: 39 × 2
+   state                    n
+   <chr>                <int>
+ 1 Alabama                 67
+ 2 Alaska                  27
+ 3 Arkansas                75
+ 4 Colorado                56
+ 5 Connecticut              8
+ 6 Delaware                 3
+ 7 District of Columbia     1
+ 8 Florida                 67
+ 9 Georgia                 99
+10 Hawaii                   5
+11 Idaho                   43
+12 Illinois               102
+13 Indiana                 92
+14 Iowa                    99
+15 Kansas                 105
+16 Kentucky                89
+17 Louisiana               64
+18 Maine                   16
+19 Maryland                24
+20 Massachusetts           14
+21 Michigan                63
+22 Minnesota               87
+23 Mississippi             40
+24 Missouri                57
+25 Montana                 46
+26 Nebraska                93
+27 New Hampshire           10
+28 New Jersey              21
+29 New Mexico              26
+30 New York                15
+# ℹ 9 more rows
+Wrote data_derived/county_program_drivetimes.csv and county_nearest_program.csv

@@ -1,0 +1,32 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Sources: 3221 counties | Supply counties (>=1 ophthalmologist): 1199
+Clusters: 108 (max size 57)
+  cluster 10/108, 0.4 min elapsed
+  cluster 20/108, 0.8 min elapsed
+  cluster 30/108, 1.1 min elapsed
+  cluster 40/108, 1.5 min elapsed
+  cluster 50/108, 1.9 min elapsed
+  cluster 60/108, 2.3 min elapsed
+  cluster 70/108, 2.6 min elapsed
+  cluster 80/108, 3.0 min elapsed
+  cluster 90/108, 3.3 min elapsed
+  cluster 100/108, 3.7 min elapsed
+
+Candidate-set check: 2 of 3221 counties whose true nearest supply county
+  was outside the candidate set (should be 0 or very few):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  8.659  10.583  12.507  12.507  14.430  16.354 
+Counties with a supply drive time: 3211 / 3221
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
+   0.00    0.00   36.69   42.78   58.94 3408.90      10 
+Wrote data_derived/county_nearest_ophthalmologist.csv

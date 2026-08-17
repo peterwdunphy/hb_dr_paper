@@ -1,0 +1,633 @@
+%=========================================================================
+% appendix.tex
+% Supplementary analyses for "Social Vulnerability and Progression to
+% Vision-Threatening Diabetic Retinopathy"
+%
+% Each test is presented in four parts, as agreed:
+%   (1) What is tested, conceptually
+%   (2) How we tested it
+%   (3) What we found
+%   (4) Interpretation
+%=========================================================================
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\onehalfspacing
+\renewcommand{\thesection}{Test~\arabic{section}}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.6em}{}
+\newcommand{\tpart}[1]{\medskip\noindent\textbf{#1}\quad}
+
+\title{\textbf{Supplementary Appendix}\\[4pt]
+\large Social Vulnerability and Progression to Vision-Threatening Diabetic
+Retinopathy: A County-Level Analysis of 3,119 United States Counties, 2021}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent This appendix documents every hypothesis we tested, including those
+that did not support the analysis reported in the main text. Each is presented
+as: what is tested conceptually, how we tested it, what we found, and how we
+interpret it.
+
+\medskip
+\noindent Unless stated otherwise, the outcome is the vision-threatening share
+of diagnosed diabetic retinopathy (VTDR cases divided by all-stage DR cases
+among adults with diabetes), models are quasibinomial with DR cases as trials,
+and continuous predictors are standardized so coefficients are per standard
+deviation on the log-odds scale.
+
+\tableofcontents
+\clearpage
+
+%=========================================================================
+\section{Post-stratification artifact in county surveillance estimates}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+County-level estimates from the Vision and Eye Health Surveillance System
+(VEHSS) are not direct measurements. They are constructed by computing national
+prevalence by age, sex, and race, applying those national rates to each county's
+demographic composition, and then adjusting by a county random effect estimated
+from Medicare and Medicaid claims. If that is so, then a county's racial and age
+composition moves its published estimate \emph{by construction}, and any
+regression of these estimates on a county-level social index that contains a
+demographic component will partly recover the post-stratification machinery
+rather than a local epidemiologic signal. The Social Vulnerability Index
+contains exactly such a component (Theme 3, racial and ethnic minority status).
+We test how much of the apparent social gradient is this artifact.
+
+\tpart{(2) How we tested it.}
+We obtained VEHSS county estimates separately for each race/ethnicity by age
+stratum (non-Hispanic White, non-Hispanic Black, and Hispanic adults, each aged
+40--64 and 65--84). Within a single stratum, demographic composition is constant
+by construction, so the only county-varying component is the county random
+effect, which is the genuinely local signal. We estimated the SVI coefficient
+(a) on the composition-varying ``All races, all ages'' file, as a conventional
+analysis would, and (b) within each fixed stratum, and compared them.
+
+\tpart{(3) What we found.}
+The composition-varying estimate was $\beta_{\mathrm{SVI}} = 0.146$. The
+within-stratum estimates were roughly one fifth as large and remarkably
+consistent across strata:
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Specification & $\beta_{\mathrm{SVI}}$ & \\
+\midrule
+All races, all ages (composition varies)   & 0.146 & \\
+Non-Hispanic White 65--84                  & 0.033 & \\
+Non-Hispanic Black 65--84                  & 0.033 & \\
+Hispanic 65--84                            & 0.035 & \\
+Non-Hispanic White 40--64                  & 0.035 & \\
+\midrule
+Pooled, stratum fixed effects              & 0.035 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Approximately 76\% of the apparent gradient is attributable to demographic
+composition. Overdispersion also fell sharply, from a dispersion parameter of
+about 15 in the unstratified model to 1.93 in the within-stratum model,
+indicating that much of the excess county-level variance was itself
+compositional.
+
+\tpart{(4) Interpretation.}
+This is a general caution for the use of VEHSS county estimates, not a finding
+about diabetic retinopathy. Studies relating these estimates to composite social
+indices, area deprivation measures, or racial composition will substantially
+overstate local gradients unless demographic composition is held fixed. Notably,
+the artifact is specific to demographic predictors: VEHSS does not use poverty
+or other socioeconomic variables as model inputs, so adjustment for the
+non-demographic content of SVI is not circular. Within-stratum estimation is a
+cheap and effective safeguard and we recommend it as routine.
+
+%=========================================================================
+\section{Is proximity to academic ophthalmology uniquely protective?}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+The motivating hypothesis of the prior version of this work was that counties
+distant from academic ophthalmology programs face barriers to subspecialty
+retinal care, and therefore worse diabetic eye outcomes. The identification
+problem is that academic programs are sited where ophthalmologists already
+practice. Raw distance to an academic program therefore conflates proximity to
+academic tertiary capacity with proximity to eye care in general. We test
+whether anything is attributable to academic centers specifically.
+
+\tpart{(2) How we tested it.}
+Five tests of increasing stringency.
+
+\emph{2a. Conditional effect.} We computed a second exposure, drive time from
+the population-weighted centroid to the nearest county containing at least one
+patient-care ophthalmologist, and entered both exposures jointly. The academic
+coefficient is then the association holding general eye care proximity fixed.
+
+\emph{2b. Discordant counties.} A $2\times2$ comparison of counties with versus
+without a local ophthalmologist, crossed with above versus below median drive
+time to an academic program. This is the comparison a reviewer of the prior
+submission requested directly.
+
+\emph{2c. Effect modification.} An interaction between academic drive time and
+having no local ophthalmologist. If academic centers supply something
+distinctive, their reach should matter most where no local alternative exists.
+
+\emph{2d. Capacity rather than proximity.} A gravity-style access score summing
+program capacity (ophthalmology residents) discounted by a Gaussian decay in
+drive time with a 120-minute bandwidth, replacing nearest-program distance.
+
+\emph{2e. Program type.} Distance to the nearest university-based program and to
+the nearest community-hospital program entered jointly, classified from program
+names (98 university-based, 25 community/hospital). If the mechanism is
+subspecialty depth rather than the presence of trainees, university proximity
+should dominate.
+
+\tpart{(3) What we found.}
+
+\emph{2a.} Academic drive time: $-0.024$ alone, $-0.023$ conditional on supply
+distance. Distance to any ophthalmologist: $+0.029$ alone, $+0.014$ conditional
+($P = 0.06$). The two exposures correlate only $0.41$. The signs are opposite:
+distance to \emph{any} ophthalmologist behaves as an access hypothesis predicts,
+while distance to an \emph{academic} program does the reverse.
+
+\emph{2b.} The $2\times2$:
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+ & $n$ & VTDR share & Median academic drive (min) \\
+\midrule
+Local ophthalmologist, far from academic  & 396   & 18.6\% & 183 \\
+Local ophthalmologist, near academic      & 773   & 19.6\% & 61  \\
+No local ophthalmologist, far from academic & 1,163 & 16.9\% & 195 \\
+No local ophthalmologist, near academic   & 787   & 17.2\% & 87  \\
+\bottomrule
+\end{tabular}
+\end{center}
+Counties with ample local ophthalmology but far from an academic center do not
+show worse case mix than those near one (18.6\% vs 19.6\%). The larger
+difference is horizontal: having any local ophthalmologist is associated with a
+roughly two point \emph{higher} vision-threatening share.
+
+\emph{2c.} Interaction $\beta = 0.008$, $P = 0.70$. A clean null.
+
+\emph{2d.} Capacity-weighted access $\beta = +0.010$, $P = 0.06$, wrong-signed.
+
+\emph{2e.} University program distance $\beta = -0.028$ ($P < 0.001$);
+community-hospital program distance $\beta = +0.000$ ($P = 0.99$). The two
+distances correlate $0.61$, so this is a real distinction rather than
+collinearity. Note this test runs on 1,333 counties, those having a
+community-hospital program among their routed candidates, a subsample skewed
+urban and eastern.
+
+In the spatial model reported in the main text, academic drive time retains a
+small negative posterior mean ($-0.010$, 95\% CrI $-0.019$ to $-0.001$): still
+signed opposite to the access hypothesis.
+
+\tpart{(4) Interpretation.}
+No specification supports the hypothesis, including the two most favorable to it
+(capacity weighting and the no-local-alternative subgroup). The consistent
+pattern is that proximity to specialist eye care, and especially to university
+programs where subspecialty retinal diagnosis concentrates, predicts \emph{more}
+diagnosed vision-threatening disease. This is difficult to read as academic
+centers improving outcomes and easier to read as diagnostic intensity: where the
+subspecialists are, vision-threatening disease is more completely identified and
+coded. The authors of the underlying surveillance estimates anticipated exactly
+this, cautioning that claims diagnoses are influenced by access to
+ophthalmologists and that their model may mistake such factors for true
+variation in prevalence. We regard test 2e as the closest thing in these data to
+a direct measurement of that phenomenon, while noting that it is an
+interpretation we have not independently isolated.
+
+%=========================================================================
+\section{Does the social gradient operate through insurance coverage?}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+If the social gradient in disease progression is produced by uninsurance and its
+downstream effects on screening and follow-up, then it should be substantially
+attenuated in a population with near-universal coverage. Medicare eligibility at
+age 65 provides that contrast. This also converts a reviewer objection to the
+prior submission into a design: the reviewer argued that restricting to older
+adults ``enriches the population more likely to have health insurance,'' which
+is precisely what makes the comparison informative.
+
+\tpart{(2) How we tested it.}
+We estimated the SVI coefficient separately for adults aged 40--64 and 65--84,
+holding race fixed, with identical covariate sets, and tested the difference
+with a two-sample $z$ statistic on the coefficient difference.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Age band & Mean VTDR share & $\beta_{\mathrm{SVI}}$ & SE \\
+\midrule
+40--64 years & 20.3\% & 0.150 & 0.0039 \\
+65--84 years & 18.0\% & 0.142 & 0.0040 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Difference $0.008$; $z = 1.42$; $P = 0.16$; ratio of odds ratios $1.01$. The
+same pattern holds within each race stratum (main text, Table 2): 0.034 versus
+0.032 among non-Hispanic White adults, 0.037 versus 0.035 among non-Hispanic
+Black adults, 0.046 versus 0.037 among Hispanic adults.
+
+\tpart{(4) Interpretation.}
+Near-universal insurance coverage does not narrow the social gradient in how
+advanced diabetic eye disease is. Whatever produces this gradient is therefore
+not principally a coverage mechanism. Remaining candidates include
+transportation and appointment access, competing demands on patient time,
+differential dilated examination rates within insured populations, and
+continuity of the primary care relationship through which retinal screening is
+ordered. We note the Hispanic 40--64 versus 65--84 contrast (0.046 vs 0.037) is
+the largest of the three and is the one comparison where a coverage effect
+cannot be excluded.
+
+%=========================================================================
+\section{Which dimension of social vulnerability?}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+SVI decomposes into four themes: socioeconomic status, household
+characteristics, racial and ethnic minority status, and housing type and
+transportation. Theme 4 contains a no-vehicle-available component and is the
+closest thing in the index to a transport access measure. If progression tracked
+Theme 4 more than Theme 1, that would be an access finding the geographic
+distance measures failed to capture, and it would be directly actionable.
+
+\tpart{(2) How we tested it.}
+Each theme was entered separately, and then all four jointly, with the standard
+covariate set.
+
+\tpart{(3) What we found.}
+Entered separately, the racial and ethnic minority theme dominated
+($\beta = 0.246$) against socioeconomic status ($0.135$), housing and
+transportation ($0.096$), and household characteristics ($0.080$). Entered
+jointly, minority status was $0.225$ while housing and transportation turned
+slightly negative ($-0.026$).
+
+\tpart{(4) Interpretation.}
+\textbf{We do not report this as a substantive finding, and it should not be
+cited as one.} These models were estimated on composition-varying estimates, and
+Test~1 establishes that county racial composition moves the VEHSS outcome
+mechanically. The apparent dominance of the minority status theme is therefore
+largely the post-stratification artifact reappearing, since Theme 3 is
+essentially a measure of county racial composition. A properly stratified
+decomposition would require SVI themes to vary within race strata, which they do
+only weakly. We report the result here solely to document that we ran it and to
+explain why it cannot be interpreted. What can be said is the negative point:
+there is no evidence that the transportation dimension drives the gradient,
+which is consistent with the null geographic access results in Test~2.
+
+%=========================================================================
+\section{Does the gradient survive adjustment for detection?}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+Because the outcome is built from diagnosed disease in claims, the severity
+share could rise wherever mild disease goes undetected, independent of true
+progression. If the social gradient were simply a detection gradient, it should
+attenuate substantially once detection proxies are included.
+
+\tpart{(2) How we tested it.}
+We compared the SVI coefficient with no adjustment against the coefficient after
+adding ophthalmologist and optometrist density, an indicator for having no local
+ophthalmologist, drive time to the nearest ophthalmologist, drive time to the
+nearest academic program, population density, and rurality.
+
+\tpart{(3) What we found.}
+SVI alone $0.163$; with detection proxies $0.145$, an attenuation of
+approximately 11\%. In the within-stratum specification the coefficient is
+$0.035$ with the same proxies included.
+
+\tpart{(4) Interpretation.}
+The gradient is not primarily a detection artifact under the proxies available
+to us, but this test is weak evidence. Provider supply is an imperfect proxy for
+screening intensity, and the VEHSS county random effects were themselves already
+adjusted for ophthalmologists per capita, so our adjustment is partly a second
+pass at a factor already partially removed. Residual detection bias remains the
+principal threat to the main finding, and its likely direction is to overstate
+it.
+
+%=========================================================================
+\section{Spatial dependence}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+County health outcomes are spatially clustered. If unmeasured regional factors
+such as state Medicaid policy, regional diabetes management norms, or health
+system catchments drive both social vulnerability and disease progression, an
+aspatial model will overstate precision and may bias coefficients.
+
+\tpart{(2) How we tested it.}
+Moran's $I$ was computed on Pearson residuals using a queen contiguity weights
+matrix over 2021 TIGER/Line county boundaries. Three island counties had no
+queen neighbor; each was linked to its nearest county by centroid distance so
+the adjacency graph was connected, a decision recorded here rather than left
+implicit. We then refitted the largest single stratum (non-Hispanic White,
+65--84, 3,106 counties) with a Leroux conditional autoregressive random effect
+using CARBayes, with binomial likelihood, VTDR cases as successes and DR cases
+as trials, 20,000 burn-in and 140,000 iterations thinned by 20.
+
+\tpart{(3) What we found.}
+Moran's $I = 0.237$ ($P < 0.001$), confirming substantial residual clustering.
+Estimated spatial dependence was strong ($\rho = 0.82$, 95\% CrI 0.73 to 0.91).
+The social vulnerability coefficient attenuated from 0.032 to 0.021 but its
+credible interval excluded zero (0.012 to 0.029). Academic drive time was
+$-0.010$ (95\% CrI $-0.019$ to $-0.001$), marginally excluding zero but signed
+opposite to the access hypothesis. Drive time to the nearest ophthalmologist,
+ophthalmologist density, and population density all had credible intervals
+spanning zero.
+
+\tpart{(4) Interpretation.}
+Roughly a third of the within-stratum social gradient is attributable to broad
+spatial structure, which is consistent with regional policy and health system
+factors contributing to it. What remains is a genuinely local association that
+is not explained by demographic composition, provider supply, rurality, or
+spatial position. The contrast between the two exposures under the same spatial
+model is the cleanest single statement of the paper's result: social
+vulnerability predicts more advanced disease, whereas distance from academic
+ophthalmology predicts marginally \emph{less} advanced disease, which is not the
+access effect the prior framing proposed.
+
+%=========================================================================
+\section{Sensitivity analyses}
+%=========================================================================
+
+\tpart{(1) What is tested.}
+Whether the main result depends on specific analytic choices: the age handling
+criticized in review, the choice of severity share over disease level, and the
+possibility that any ratio constructed from VEHSS estimates would show these
+patterns.
+
+\tpart{(2) How we tested it.}
+\emph{6a. Age standardization.} We computed an age-standardized severity share
+weighting stratum-specific shares by the national distribution of DR cases
+across VEHSS age strata, and compared it with the crude all-ages share.
+
+\emph{6b. Level versus severity.} We refitted the identical specifications with
+diagnosed DR prevalence among adults with diabetes as the outcome, to compare
+against the severity share.
+
+\emph{6c. Parallel construction on a different disease.} Glaucoma carries an
+analogous severity split in VEHSS (vision-affecting versus all glaucoma). We
+built the identical ratio and refitted, asking whether these patterns are
+specific to diabetic retinopathy or general to VEHSS-derived severity ratios.
+
+\tpart{(3) What we found.}
+\emph{6a.} Crude and age-standardized shares correlate at $r = 0.992$. Results
+are unchanged.
+
+\emph{6b.} With the proper diabetes denominator and full covariate adjustment,
+drive time was not associated with DR level ($\beta = -0.005$, $P = 0.059$), and
+SVI was associated only weakly ($\beta = 0.025$) compared with its association
+with severity ($\beta = 0.145$ unstratified). Disease occurrence and disease
+progression behave differently, and the severity share is essentially
+uncorrelated with the level (Spearman $\rho = -0.08$).
+
+\emph{6c.} The glaucoma severity share has roughly one tenth the relative
+variation of the VTDR share (coefficient of variation 0.024 vs 0.231) and
+correlates with it at 0.55.
+
+\tpart{(4) Interpretation.}
+\emph{6a} retires the age-cutoff objection: the result does not depend on where
+an age threshold is placed, because no threshold is used and standardization
+does not move it.
+
+\emph{6b} is the substantive justification for the paper's reframing. The social
+gradient in progression is several times the gradient in occurrence among people
+with diabetes, and the two outcomes are nearly orthogonal, so this is not the
+established prevalence finding restated.
+
+\emph{6c} must be reported carefully. We originally proposed glaucoma as a
+negative control. It cannot serve that purpose: its severity share barely varies
+and it correlates substantially with the DR severity share, so a null there
+would reflect low variance rather than specificity. The shared variation is
+itself suggestive of a common county-level factor, plausibly care intensity,
+which is consistent with the detection interpretation in Test~2 but does not
+establish it. A stronger design would use a placebo \emph{exposure}, such as
+distance to accredited programs in a specialty unrelated to eye care, which we
+did not have data to construct.
+
+%=========================================================================
+\section{Detection stress test using Medicare claims volume}
+%=========================================================================
+
+\tpart{(1) What is tested.} The principal threat to the main finding is that
+mild diabetic retinopathy goes undiagnosed more often in disadvantaged counties,
+shrinking the denominator and inflating the vision-threatening share without any
+true difference in progression. Provider density (Test~5) is a weak proxy for
+this, because having ophthalmologists nearby is not the same as diagnostic
+activity occurring. We wanted a measure of how much diagnostic work actually
+happens in a county, drawn from claims rather than from workforce counts.
+
+\tpart{(2) How we tested it.} From the CMS Medicare Geographic Variation Public
+Use File (county, 2021) we took imaging events, evaluation and management
+events, and diagnostic test events per 1,000 Original Medicare beneficiaries.
+These were added to the within-stratum specification, singly and jointly, on a
+common complete-case sample (13,035 cells).
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Specification & $\beta_{\mathrm{SVI}}$ & SE & $P$ \\
+\midrule
+Base (same sample)                & 0.0353 & 0.0016 & $<0.001$ \\
+$+$ Medicare imaging per 1,000    & 0.0371 & 0.0016 & $<0.001$ \\
+$+$ Medicare E\&M per 1,000       & 0.0375 & 0.0016 & $<0.001$ \\
+$+$ all three                     & 0.0354 & 0.0016 & $<0.001$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The coefficients on the detection proxies themselves were imaging $-0.028$
+($P<0.001$), E\&M $+0.010$ ($P<0.001$), and tests $+0.007$ ($P = 0.002$).
+
+\tpart{(4) Interpretation.} The social gradient is completely unmoved. What
+makes this informative rather than merely null is that the detection pathway is
+plainly visible in the same model: counties with more Medicare imaging have a
+\emph{lower} vision-threatening share, exactly as differential detection
+predicts, since more diagnostic activity finds more mild disease. So the
+mechanism exists, is measurable here, and does not account for the social
+gradient. This is the strongest evidence we can offer against the detection
+explanation. Its limit is that these are all-cause diagnostic volumes, not
+retinal screening specifically; a claims measure of dilated eye examination
+rates by county would be a better instrument and we could not obtain one at
+county level.
+
+%=========================================================================
+\section{Preventive-screening engagement as a mechanism}
+%=========================================================================
+
+\tpart{(1) What is tested.} If the gradient is not coverage and not detection,
+the remaining candidate on our causal diagram is screening cadence and retention
+in care. We wanted a measure of whether a county's population actually completes
+recommended preventive screening, with no ophthalmic content, so that any
+attenuation could not be attributed to eye care access.
+
+\tpart{(2) How we tested it.} County mammography screening completion (County
+Health Rankings 2021, derived from Medicare claims) and influenza vaccination
+were added to the within-stratum specification.
+
+\tpart{(3) What we found.} The gradient fell from 0.0353 to 0.0206, an
+attenuation of approximately 42\% on the log-odds scale and 29\% on the
+standardized scale. Mammography completion was itself strongly associated with
+the outcome ($\beta = -0.039$, $P<0.001$), and correlated $-0.42$ with social
+vulnerability. Influenza vaccination added little ($\beta = 0.005$,
+$P = 0.04$).
+
+\tpart{(4) Interpretation.} Roughly two fifths of the social gradient in
+diabetic retinopathy progression is shared with general preventive-screening
+follow-through. Read alongside Test~8, where diagnostic volume explained none of
+it, the pattern is specific: what matters is not how much medical looking occurs
+in a county but whether its population completes recommended preventive care.
+That points at screening cadence rather than at ophthalmology capacity, and it
+is consistent with the null geographic access results in Test~2.
+
+Two cautions. Mammography is a female-only screen applied here to a both-sex
+outcome, so it functions as a county-level index of screening culture, not an
+individual-level mediator. And because screening engagement is plausibly on the
+causal path rather than a confounder, this is a decomposition, not an adjustment;
+we do not claim a formal mediation estimate.
+
+%=========================================================================
+\section{Direct coverage measures}
+%=========================================================================
+
+\tpart{(1) What is tested.} Test~3 inferred the role of insurance indirectly,
+from the age contrast at Medicare eligibility. Here we test coverage directly.
+
+\tpart{(2) How we tested it.} The county uninsured rate (County Health Rankings)
+and the share of Medicare beneficiaries dually eligible for Medicaid (CMS) were
+added to the within-stratum specification. Dual eligibility is informative
+because within the 65 and over population everyone already has Medicare, so it
+isolates poverty among the fully insured.
+
+\tpart{(3) What we found.} The gradient moved from 0.0353 to 0.0343 with both
+included, and neither covariate was independently associated with the outcome
+(uninsured $P = 0.14$; dual-eligible $P = 0.44$). Restricting to the 65--84 band
+and using dual eligibility as the exposure, however, gave $\beta = 0.006$
+($P<0.001$).
+
+\tpart{(4) Interpretation.} Direct coverage measures confirm what the age
+contrast implied: insurance status does not explain the social gradient in
+progression. The 65--84 dual-eligibility result is the useful positive: among a
+population that is universally insured, poverty still predicts more advanced
+disease. Coverage is necessary but plainly not sufficient.
+
+%=========================================================================
+\section{Medicaid expansion, and a placebo that refutes it}
+%=========================================================================
+
+\tpart{(1) What is tested.} Medicaid expansion changed coverage for low-income
+adults under 65 and left the 65 and over population untouched. If coverage drove
+the social gradient, the gradient among adults 40--64 should be smaller in
+expansion states. The 65--84 band is a built-in placebo: expansion cannot have
+affected it, so any contrast appearing equally there is confounding.
+
+\tpart{(2) How we tested it.} Counties were classified by 2021 state expansion
+status (Kaiser Family Foundation). Missouri and Oklahoma implemented mid-2021
+and were excluded rather than forced into either group. We estimated the SVI
+gradient in each age-by-expansion cell and fitted the formal triple interaction.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{llrr}
+\toprule
+Age band & Expansion status & Cells & $\beta_{\mathrm{SVI}}$ \\
+\midrule
+40--64 & Non-expansion & 2,736 & 0.0163 \\
+40--64 & Expansion     & 3,822 & 0.0461 \\
+65--84 & Non-expansion & 2,436 & 0.0122 \\
+65--84 & Expansion     & 3,307 & 0.0421 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Triple interaction SVI $\times$ expansion $\times$ age band: $\beta = 0.0023$,
+$P = 0.73$.
+
+\tpart{(4) Interpretation.} Read carelessly, the first two rows say Medicaid
+expansion triples the social gradient, which would be a striking and
+counterintuitive policy finding. The placebo refutes it. The same contrast
+appears, essentially unchanged, in the Medicare-age population that expansion
+could not have touched, and the triple interaction is null. The difference is
+therefore between expansion and non-expansion \emph{states}, which differ in
+region, urbanisation, health system structure, and the distribution of social
+vulnerability itself, and not a consequence of expansion. We report this test
+principally as a demonstration that the placebo design works, and as a caution
+against the two-cell comparison that a reader might otherwise draw from these
+data.
+
+%=========================================================================
+\section{Convergent validity against an independent care-quality outcome}
+%=========================================================================
+
+\tpart{(1) What is tested.} Whether the social gradient we report sits within a
+coherent pattern of county care-quality gradients, or is anomalous and therefore
+more likely to be a measurement artifact of VEHSS.
+
+\tpart{(2) How we tested it.} We regressed two outcomes drawn entirely outside
+VEHSS on social vulnerability with the same covariate set: preventable hospital
+stays (ambulatory-care-sensitive admissions, Medicare claims) and mammography
+screening completion. All outcomes were placed in standard deviation units so
+magnitudes are comparable with the vision-threatening share.
+
+\tpart{(3) What we found.} Per standard deviation of social vulnerability:
+preventable hospital stays $+0.279$ SD ($P<0.001$); mammography completion
+$-0.465$ SD ($P<0.001$); vision-threatening share $+0.100$ SD ($P<0.001$). The
+Spearman correlation between preventable hospital stays and the
+vision-threatening share was $0.134$.
+
+\tpart{(4) Interpretation.} Social vulnerability predicts ambulatory care
+failure in a different organ system and a different data system, which supports
+the care-quality reading of our result. It also puts the finding in proportion:
+the diabetic retinopathy progression gradient is roughly a third the magnitude
+of the preventable-hospitalisation gradient and about a fifth of the
+mammography gradient. It is real and consistent, but it is a modest gradient,
+and the low correlation between the two outcomes indicates they are related
+rather than interchangeable.
+
+%=========================================================================
+\section{Data provenance and reproducibility}
+%=========================================================================
+
+\tpart{(1) What is tested.} Whether the analytic file can be rebuilt from public
+sources without manual steps, and whether derived quantities reproduce published
+benchmarks.
+
+\tpart{(2) How we tested it.} The pipeline is a numbered sequence of scripts that
+downloads each source directly from its public endpoint, with no manual
+download or point-and-click step. We validated the constructed outcome against
+the published national estimates.
+
+\tpart{(3) What we found.} Aggregating our county numerators reproduces the
+published national figures: DR 26.43\% of adults with diabetes (published
+26.43\%), VTDR 5.05\% (published 5.06\%), VTDR share 19.1\% (published
+1.84/9.60 million $=$ 19.2\%). Source coverage was complete except as noted:
+Puerto Rico is absent from VEHSS; 14 island and remote counties in Alaska and
+Hawaii have no routable road path to any program.
+
+\tpart{(4) Interpretation.} Two data-handling issues discovered during
+construction are worth recording because they would silently corrupt a
+replication. First, the earlier working dataset for this project used 2023
+American Community Survey population, whose Connecticut planning-region
+geography does not match the county geography of the 2021 surveillance and
+vulnerability data; this produced eight apparently missing Connecticut counties
+that are not missing at all once the correct vintage is used. Second, one
+residency program (University of Wisconsin, Madison) geocoded to Madison County,
+Illinois, roughly 350 miles away, which would have removed Wisconsin's flagship
+program from the exposure surface for the upper Midwest. It was caught by
+cross-checking program locations against Area Health Resources File ophthalmology
+resident counts, a check we recommend to anyone geocoding program rosters.
+
+\end{document}

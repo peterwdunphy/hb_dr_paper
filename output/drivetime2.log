@@ -1,0 +1,43 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Counties: 3221   Programs (accredited <=2021): 123
+Pairs to route: 24429 (of 396183 possible)
+Checkpoint chunks: 307 | usable: 107 | to re-request: 200
+  10 requests, 0.2 min elapsed
+  20 requests, 0.5 min elapsed
+  30 requests, 0.8 min elapsed
+  40 requests, 1.0 min elapsed
+  50 requests, 1.3 min elapsed
+  60 requests, 1.5 min elapsed
+  70 requests, 1.8 min elapsed
+  80 requests, 2.1 min elapsed
+  90 requests, 2.3 min elapsed
+  100 requests, 2.6 min elapsed
+  110 requests, 2.8 min elapsed
+  120 requests, 3.1 min elapsed
+  130 requests, 3.3 min elapsed
+  140 requests, 3.6 min elapsed
+  150 requests, 3.9 min elapsed
+  160 requests, 4.1 min elapsed
+  170 requests, 4.4 min elapsed
+  180 requests, 4.6 min elapsed
+  190 requests, 4.9 min elapsed
+  200 requests, 5.2 min elapsed
+Routed pairs: 24454   unroutable (NA): 382
+Counties with a drive time: 3207 / 3221
+Counties with NO routable program (island/remote):
+# A tibble: 2 × 2
+  state      n
+  <chr>  <int>
+1 Alaska     9
+2 Hawaii     5
+Wrote data_derived/county_program_drivetimes.csv and county_nearest_program.csv
