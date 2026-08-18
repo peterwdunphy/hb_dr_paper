@@ -115,7 +115,9 @@ Pooled, stratum fixed effects              & 0.035 & \\
 \end{center}
 
 Approximately 76\% of the apparent gradient is attributable to demographic
-composition. Overdispersion also fell sharply, from a dispersion parameter of
+composition, and decomposition shows this is almost entirely \emph{racial}
+composition: holding age fixed alone leaves the coefficient at 0.150, while
+holding race fixed alone gives 0.034, essentially the fully stratified value. Overdispersion also fell sharply, from a dispersion parameter of
 about 15 in the unstratified model to 1.93 in the within-stratum model,
 indicating that much of the excess county-level variance was itself
 compositional.
@@ -259,9 +261,9 @@ adults ``enriches the population more likely to have health insurance,'' which
 is precisely what makes the comparison informative.
 
 \tpart{(2) How we tested it.}
-We estimated the SVI coefficient separately for adults aged 40--64 and 65--84,
-holding race fixed, with identical covariate sets, and tested the difference
-with a two-sample $z$ statistic on the coefficient difference.
+We estimated the SVI coefficient separately for adults aged 40--64 and 65--84
+with race held fixed by fixed effects, using identical covariate sets, and
+tested the difference with a two-sample $z$ statistic.
 
 \tpart{(3) What we found.}
 \begin{center}
@@ -269,15 +271,23 @@ with a two-sample $z$ statistic on the coefficient difference.
 \toprule
 Age band & Mean VTDR share & $\beta_{\mathrm{SVI}}$ & SE \\
 \midrule
-40--64 years & 20.3\% & 0.150 & 0.0039 \\
-65--84 years & 18.0\% & 0.142 & 0.0040 \\
+40--64 years & 20.3\% & 0.037 & 0.0022 \\
+65--84 years & 18.0\% & 0.033 & 0.0023 \\
 \bottomrule
 \end{tabular}
 \end{center}
-Difference $0.008$; $z = 1.42$; $p = 0.16$; ratio of odds ratios $1.01$. The
-same pattern holds within each race stratum (main text, Table 2): 0.034 versus
-0.032 among non-Hispanic White adults, 0.037 versus 0.035 among non-Hispanic
-Black adults, 0.046 versus 0.037 among Hispanic adults.
+Difference $0.004$; $z = 1.35$; $p = 0.18$. The same pattern holds within each
+race stratum (main text, Table 2): 0.034 versus 0.032 among non-Hispanic White
+adults, 0.037 versus 0.035 among non-Hispanic Black adults, 0.046 versus 0.037
+among Hispanic adults.
+
+\medskip
+\noindent\emph{Correction of frame.} An earlier draft estimated this test in the
+composition-varying ``All races'' frame, giving 0.150 versus 0.142 (difference
+0.008, $p = 0.16$). Those coefficients are inflated by the post-stratification
+artifact documented in Test~1 and were inconsistent with this study's primary
+design. The values above hold race fixed. The conclusion is unchanged: the
+gradient is not narrower where coverage is near-universal.
 
 \tpart{(4) Interpretation.}
 Near-universal insurance coverage does not narrow the social gradient in how

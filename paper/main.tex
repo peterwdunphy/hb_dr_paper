@@ -89,7 +89,7 @@ to 1.039; $p < 0.001$), corresponding to approximately 0.43 percentage points
 per standard deviation. The gradient was consistent across all six race-by-age
 strata examined ($\beta$ 0.032 to 0.046). It was no smaller among adults aged 65
 to 84, who are near-universally Medicare eligible, than among adults aged 40 to
-64 (difference 0.008, $p = 0.16$). The association persisted under a Leroux
+64 (difference 0.004, $p = 0.18$). The association persisted under a Leroux
 conditional autoregressive model with strong residual spatial dependence
 ($\rho = 0.83$): SVI 0.021 (95\% credible interval 0.012 to 0.029). The gradient
 was unchanged by adjustment for Medicare imaging, evaluation and management, and
@@ -100,7 +100,9 @@ preventive-screening engagement. County uninsured rate and dual-eligible share
 did not explain it. Estimated without stratification, the same association was
 0.146, indicating that approximately 76\% of the apparent county-level social
 gradient in published VEHSS estimates is attributable to demographic
-post-stratification rather than to local variation.
+post-stratification rather than to local variation. Decomposition shows this is
+almost entirely \emph{racial} composition: holding age fixed leaves the
+coefficient unchanged (0.150), whereas holding race fixed collapses it (0.034).
 
 \noindent\textbf{Conclusions:} Among adults who already have diabetic
 retinopathy, those living in more socially vulnerable counties are more likely
@@ -469,6 +471,14 @@ apparent county-level social gradient in published VEHSS estimates is therefore
 attributable to demographic post-stratification rather than to local variation
 (Table~\ref{tab:main}).
 
+The artifact is specifically a \emph{racial} composition effect, not an age
+effect. Holding age fixed while allowing racial composition to vary leaves the
+coefficient essentially unchanged at 0.150; holding race fixed while allowing
+age to vary collapses it to 0.034, which is already the fully stratified value.
+This is what the post-stratification mechanism predicts, since national
+race-specific vision-threatening rates differ substantially while the
+county-level social gradient is largely orthogonal to age composition.
+
 This has direct implications for the interpretation of prior and future work
 using these widely used county estimates, and we return to it in the Discussion.
 
@@ -508,11 +518,11 @@ race-by-age stratum.}
 
 If the social gradient in disease progression operated principally through
 insurance coverage, it should be attenuated among adults aged 65 to 84, for whom
-Medicare coverage is near-universal. It was not. The SVI coefficient was 0.150
-among adults aged 40 to 64 and 0.142 among adults aged 65 to 84, a difference of
-0.008 that did not approach significance ($z = 1.42$, $p = 0.16$; ratio of odds
-ratios 1.01). The same pattern held within race strata
-(Table~\ref{tab:strata}).
+Medicare coverage is near-universal. It was not. Estimated within demographic
+strata, the SVI coefficient was 0.037 among adults aged 40 to 64 and 0.033
+among adults aged 65 to 84, a difference of 0.004 that did not approach
+significance ($z = 1.35$, $p = 0.18$). The same pattern held in each race
+stratum separately (Table~\ref{tab:strata}).
 
 \subsection{Geographic access}
 
@@ -689,24 +699,25 @@ Spatial dependence $\rho$              & $0.8265$  & $0.7281$ to $0.9112$ \\
 \centering
 \caption{Social vulnerability coefficient under adjustment for external
 measures of diagnostic intensity, preventive-screening engagement, and
-insurance coverage. Each block is estimated on its own complete-case sample, so
-the base row is repeated for comparability.}
+insurance coverage. Each block is estimated on its own complete-case sample
+(13,035, 13,008 and 13,024 cells respectively), so each block carries its own
+base row; all three round to the same value.}
 \label{tab:external}
 \begin{tabular}{llrrr}
 \toprule
 Domain & Specification & $\beta_{\mathrm{SVI}}$ & SE & $p$ \\
 \midrule
 \multirow{2}{*}{Diagnostic intensity}
- & Base (same sample)                 & 0.0353 & 0.0016 & $<0.001$ \\
+ & Base (block sample)                & 0.0353 & 0.0016 & $<0.001$ \\
  & + Medicare imaging, E\&M, tests per 1,000 & 0.0354 & 0.0016 & $<0.001$ \\
 \midrule
 \multirow{3}{*}{Preventive screening}
- & Base (same sample)                 & 0.0353 & 0.0016 & $<0.001$ \\
+ & Base (block sample)                & 0.0353 & 0.0016 & $<0.001$ \\
  & + Mammography screening            & 0.0206 & 0.0017 & $<0.001$ \\
  & + Mammography and influenza vaccination & 0.0217 & 0.0018 & $<0.001$ \\
 \midrule
 \multirow{3}{*}{Coverage}
- & Base (same sample)                 & 0.0353 & 0.0016 & $<0.001$ \\
+ & Base (block sample)                & 0.0353 & 0.0016 & $<0.001$ \\
  & + Uninsured rate                   & 0.0335 & 0.0019 & $<0.001$ \\
  & + Uninsured rate and dual-eligible share & 0.0343 & 0.0021 & $<0.001$ \\
 \bottomrule
