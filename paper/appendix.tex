@@ -144,7 +144,7 @@ academic tertiary capacity with proximity to eye care in general. We test
 whether anything is attributable to academic centers specifically.
 
 \tpart{(2) How we tested it.}
-Five tests of increasing stringency.
+Four tests of increasing stringency.
 
 \emph{2a. Conditional effect.} We computed a second exposure, drive time from
 the population-weighted centroid to the nearest county containing at least one
@@ -164,17 +164,20 @@ distinctive, their reach should matter most where no local alternative exists.
 program capacity (ophthalmology residents) discounted by a Gaussian decay in
 drive time with a 120-minute bandwidth, replacing nearest-program distance.
 
-\emph{2e. Program type.} Distance to the nearest university-based program and to
-the nearest community-hospital program entered jointly, classified from program
-names (98 university-based, 25 community/hospital). If the mechanism is
-subspecialty depth rather than the presence of trainees, university proximity
-should dominate.
+\emph{2e. Program type.} Distance to the nearest medical-school-based program
+and to the nearest hospital or health-system program, entered jointly in the
+fully adjusted model. A program was designated medical-school-based when its
+sponsoring institution is a university or degree-granting medical school (105
+programs), and hospital or health-system based otherwise (18, including four
+military programs). If the mechanism is subspecialty depth rather than the
+presence of trainees, medical-school proximity should dominate.
 
 \tpart{(3) What we found.}
 
 \emph{2a.} Academic drive time: $-0.024$ alone, $-0.023$ conditional on supply
 distance. Distance to any ophthalmologist: $+0.029$ alone, $+0.014$ conditional
-($p = 0.06$). The two exposures correlate only $0.41$. The signs are opposite:
+($p = 0.06$). Both exposures are oriented so that higher values mean worse
+access. The two correlate only $0.41$. The signs are opposite:
 distance to \emph{any} ophthalmologist behaves as an access hypothesis predicts,
 while distance to an \emph{academic} program does the reverse.
 
@@ -198,26 +201,41 @@ roughly two point \emph{higher} vision-threatening share.
 
 \emph{2c.} Interaction $\beta = 0.008$, $p = 0.70$. A clean null.
 
-\emph{2d.} Capacity-weighted access $\beta = +0.010$, $p = 0.06$, wrong-signed.
+\emph{2d.} Capacity-weighted access $\beta = +0.018$, $p<0.001$ in the
+within-stratum model. Because a higher access score denotes \emph{better}
+access, the positive sign carries the same meaning as the negative drive-time
+coefficient: better modeled access, more vision-threatening disease.
 
-\emph{2e.} University program distance $\beta = -0.028$ ($p < 0.001$);
-community-hospital program distance $\beta = +0.000$ ($p = 0.99$). The two
-distances correlate $0.61$, so this is a real distinction rather than
-collinearity. Note this test runs on 1,333 counties, those having a
-community-hospital program among their routed candidates, a subsample skewed
-urban and eastern.
-
-Figures 1 to 4 of the companion manuscript on academic ophthalmology display
-these results graphically. In the spatial model, academic drive time retains a
+In the spatial model, academic drive time retains a
 small negative posterior mean ($-0.010$, 95\% CrI $-0.019$ to $-0.001$): still
 signed opposite to the access hypothesis.
 
 \tpart{(4) Interpretation.}
 No specification supports the hypothesis, including the two most favorable to it
 (capacity weighting and the no-local-alternative subgroup). The consistent
-pattern is that proximity to specialist eye care, and especially to university
-programs where subspecialty retinal diagnosis concentrates, predicts \emph{more}
-diagnosed vision-threatening disease. This is difficult to read as academic
+pattern is that proximity to specialist eye care, and especially to
+medical-school programs where subspecialty retinal diagnosis concentrates,
+predicts \emph{more} diagnosed vision-threatening disease.
+
+\medskip
+\noindent\emph{A subdivision we considered and abandoned.} An earlier draft
+split the roster into ``university'' and ``community hospital'' programs and
+reported that only the former tracked disease severity. We have removed that
+analysis. All 123 programs are ACGME-accredited ophthalmology residencies:
+every one of them is academic ophthalmology, and institutions such as Cleveland
+Clinic, Henry Ford, Geisinger and Cook County are major academic training
+centers that no defensible rule would call ``community.'' The apparent contrast
+was also unstable, moving from a clean null for the non-university group under
+a mechanical name regex to a clearly non-zero coefficient under every
+classification we regarded as more accurate. Because the categories do not
+correspond to a real distinction in academic ophthalmology, we report the
+roster as a single exposure.
+
+\medskip
+\noindent Two cautions on the internal evidence. Tests 2a and 2d are not independent:
+drive time and the gravity access score encode the same geography with opposite
+orientation and correlate at $0.61$, so their agreement is arithmetic rather
+than corroborative.  This is difficult to read as academic
 centers improving outcomes and easier to read as diagnostic intensity: where the
 subspecialists are, vision-threatening disease is more completely identified and
 coded. The authors of the underlying surveillance estimates anticipated exactly

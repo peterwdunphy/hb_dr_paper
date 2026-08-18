@@ -54,8 +54,9 @@ from ophthalmology clinics predicts proliferative disease.
 \noindent\textbf{Design:} Cross-sectional analysis of county-level surveillance
 estimates.
 
-\noindent\textbf{Subjects:} 3,119 United States counties, representing 36.1
-million adults with diabetes and 9.53 million with diagnosed DR.
+\noindent\textbf{Subjects:} 3,119 of 3,139 United States counties with 2021 surveillance
+estimates, representing 36.1 million adults with diabetes and 9.53 million with
+diagnosed DR.
 
 \noindent\textbf{Methods:} Road-network drive times were computed from
 population-weighted county centroids to each of 123 ACGME-accredited
@@ -63,7 +64,7 @@ ophthalmology residency programs accredited by 2021, and separately to the
 nearest county containing any patient-care ophthalmologist. The outcome was the
 proportion of diagnosed DR that was vision-threatening, from the CDC Vision and
 Eye Health Surveillance System. Models were quasibinomial and estimated within
-county $\times$ race/ethnicity $\times$ age strata. Five prespecified tests
+county $\times$ race/ethnicity $\times$ age strata. Four prespecified tests
 addressed whether any association is attributable to academic centers
 specifically rather than to eye care supply in general.
 
@@ -80,9 +81,7 @@ volume, or preventive screening. Counties with local ophthalmologists but far
 from an academic center had a vision-threatening share of 18.6\%, against 19.6\%
 for those near one. Academic proximity did not matter more where no local
 ophthalmologist existed (interaction $p = 0.70$), and capacity-weighted access
-did not perform better than simple proximity. Distance to university-based
-programs was associated with the outcome ($\beta = -0.028$, $p<0.001$) whereas
-distance to community-hospital programs was not ($\beta = 0.000$, $p = 0.99$).
+did not perform better than simple proximity.
 
 \noindent\textbf{Conclusions:} Proximity to academic ophthalmology does not
 predict less severe diabetic retinopathy at the population level. The pattern is
@@ -149,6 +148,20 @@ identifiers; institutional review board approval was not required. The full data
 pipeline is publicly available, and all sources are described in detail in the
 accompanying Supplementary Appendix.
 
+\subsection{Units of analysis and eligibility}
+
+The unit of analysis was the county or county-equivalent jurisdiction. VEHSS
+publishes 2021 diabetic retinopathy estimates with both all-stage and
+vision-threatening case counts for 3,139 counties; Puerto Rico is absent from
+the source entirely. Twenty of these were excluded, leaving 3,119 in the
+analytic sample: twelve had no routable road path to any residency program
+(eight Alaska boroughs and four Hawaii counties); four carried retired or
+renamed FIPS codes present in the surveillance file but absent from 2021
+Census geography (Valdez-Cordova and Wade Hampton in Alaska, Shannon County in
+South Dakota, and Bedford city in Virginia); and four had insufficient
+age-stratified case counts to enter the stratified models (Petroleum County,
+Montana, and Arthur, Blaine and McPherson Counties, Nebraska).
+
 \subsection{Outcome}
 
 The outcome is the \emph{vision-threatening share}: the number of people with
@@ -213,14 +226,23 @@ accordingly. Continuous predictors were standardized and drive times
 log-transformed, so coefficients are per standard deviation and comparable
 across exposures.
 
-Five prespecified tests addressed the specificity question: (i) the academic
+Four prespecified tests addressed the specificity question: (i) the academic
 coefficient conditional on general eye care proximity; (ii) a $2\times2$
 comparison of counties with and without a local ophthalmologist crossed with
 academic proximity; (iii) an interaction testing whether academic proximity
 matters more where no local ophthalmologist exists; (iv) a capacity-weighted
 gravity access score using ophthalmology resident counts with a 120-minute
-Gaussian decay, replacing simple proximity; and (v) distance to university-based
-versus community-hospital programs entered jointly. Analyses used R 4.6.0.
+Gaussian decay, replacing simple proximity; All four
+were estimated with the full covariate set (social vulnerability,
+ophthalmologist and optometrist density, population density, rurality, distance
+to the nearest ophthalmologist, and stratum fixed effects); unadjusted
+estimates are reported alongside where they differ materially.
+
+Note on orientation: drive time and the gravity access score run in opposite
+directions, since longer drive time means worse access while a higher access
+score means better access. A negative drive-time coefficient and a positive
+access-score coefficient therefore carry the same substantive meaning. Analyses
+used R 4.6.0.
 
 %=========================================================================
 \section{Results}
@@ -290,24 +312,16 @@ proximity.}
 If academic centers supply something distinctive, their reach should matter most
 where no local eye care exists. The interaction between academic drive time and
 having no local ophthalmologist was null ($\beta = 0.008$, $p = 0.70$).
-Capacity-weighted access using resident counts performed no better, and was
-also wrong-signed ($\beta = +0.010$, $p = 0.06$).
 
-\subsection{Only university program proximity tracks severity}
-
-Distance to the nearest university-based program was associated with the outcome
-($\beta = -0.028$, $p<0.001$), whereas distance to the nearest
-community-hospital program was associated with nothing at all
-($\beta = 0.000$, $p = 0.99$), despite the two distances correlating at 0.61
-(Figure~\ref{fig:a4}).
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{figs/figA4_progtype.pdf}
-\caption{Distance to university-based versus community-hospital programs,
-entered jointly.}
-\label{fig:a4}
-\end{figure}
+Replacing simple proximity with a capacity-weighted gravity score did not help.
+Because a higher access score denotes \emph{better} access, its positive
+coefficient ($\beta = +0.018$, $p<0.001$) carries the same substantive meaning
+as the negative drive-time coefficient: counties with better modeled access to
+academic capacity had a higher, not lower, vision-threatening share. We
+emphasize that this is not independent confirmation. The two exposures are
+alternative encodings of the same underlying geography and correlate at
+$0.61$ once orientation is aligned; entered jointly both attenuate
+(drive time $-0.016$, access score $+0.009$).
 
 \subsection{Spatial confirmation}
 
@@ -326,15 +340,7 @@ opposite direction to the access hypothesis, was small, did not attenuate under
 adjustment, was absent where it should have been strongest, and was not improved
 by weighting for program capacity.
 
-The most informative single result is the contrast between program types.
-Proximity to university-based programs tracked disease severity; proximity to
-community-hospital programs, which also train residents, tracked nothing. If the
-operative mechanism were training capacity or the presence of an accredited
-program, both should behave alike. What distinguishes university departments is
-the concentration of subspecialty retinal diagnosis. That is a detection
-signature rather than a treatment one.
-
-Several other results point the same way. Counties containing any
+Several results point toward detection rather than clinical benefit. Counties containing any
 ophthalmologist had about two percentage points more vision-threatening disease
 than counties with none. Counties with higher Medicare imaging volume had less
 vision-threatening disease, consistent with greater diagnostic activity
@@ -375,9 +381,10 @@ of it there is.
 
 \subsection{What the data do support}
 
-Two findings survive. First, the presence of any local ophthalmologist, not the
-academic character of the nearest institution, is what tracks measured disease
-severity, and it does so in the direction expected of diagnostic intensity.
+Two findings survive. First, the presence of any local ophthalmologist tracks
+measured disease severity in the direction expected of diagnostic intensity, and
+does so more consistently than the academic character of the nearest
+institution.
 Second, in a companion analysis of the same data, county social vulnerability
 predicts the vision-threatening share within demographic strata and is
 substantially attenuated by general preventive-screening completion, implicating
@@ -391,12 +398,11 @@ diagnosed disease in claims, so undiagnosed disease is invisible; this is
 precisely the mechanism we invoke to explain the pattern, and we cannot fully
 separate it from a true absence of effect. Third, drive times model private
 vehicle travel and ignore traffic, ferries, and public transportation entirely;
-fourteen island and remote counties in Alaska and Hawaii had no routable path
-and are excluded. Fourth, the university versus community contrast is estimated
-on 1,333 counties having both program types among their routed candidates, a
-subsample skewed urban and eastern. Fifth, residency program location is a proxy
+twelve island and remote counties in Alaska and Hawaii had no routable path and
+are excluded, along with four counties carrying retired FIPS codes and four with
+insufficient age-stratified counts. Fourth, residency program location is a proxy
 for academic ophthalmology and does not capture non-academic retina practices,
-satellite clinics, or teleretinal programs. Sixth, Puerto Rico is absent from the
+satellite clinics, or teleretinal programs. Fifth, Puerto Rico is absent from the
 VEHSS source.
 
 \subsection{Conclusion}

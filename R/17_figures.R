@@ -74,7 +74,7 @@ pA1 <- ggplot(binned, aes(bin, share)) +
        subtitle = wr("Share of diagnosed DR that is vision-threatening, by drive time to the nearest ophthalmology residency program", 95),
        x = "Drive time to nearest academic ophthalmology residency program (minutes)",
        y = "Vision-threatening share of\ndiagnosed DR (%)",
-       caption = wrc("3,207 US counties, 2021. Bars are mean county shares; whiskers are 95% confidence intervals for the mean, reflecting between-county variation. If proximity to academic ophthalmology protected against progression, this would slope upward from left to right.")) +
+       caption = wrc("3,119 US counties in the analytic sample, 2021. Bars are mean county shares; whiskers are 95% confidence intervals for the mean, reflecting between-county variation. If proximity to academic ophthalmology protected against progression, this would slope upward from left to right.")) +
   coord_cartesian(ylim = c(0, 24))
 ggsave("paper/figs/figA1_drivetime.pdf", pA1, width = 7.6, height = 3.9)
 
@@ -95,10 +95,10 @@ pA2 <- ggplot(tab, aes(local, share, fill = acad)) +
   geom_text(aes(label = paste0("n=", format(n, big.mark=","))),
             position = position_dodge(.72), vjust = 1.6, size = 2.4, colour = "grey20") +
   scale_fill_manual(values = c("Near academic" = "grey35", "Far from academic" = "grey78"), name = NULL) +
-  labs(title = wr("Counties with local eye care but far from an academic centre are not worse off"),
+  labs(title = wr("Counties with local eye care but far from an academic center are not worse off"),
        subtitle = wr("The comparison requested in peer review: local ophthalmologist supply crossed with academic proximity", 95),
        x = NULL, y = "Vision-threatening share of\ndiagnosed DR (%)",
-       caption = wrc("The vertical contrast (academic proximity) is small and favours the near-academic group only slightly. The horizontal contrast (having any local ophthalmologist) is larger, and in the direction expected of greater diagnostic intensity.")) +
+       caption = wrc("The vertical contrast (academic proximity) is small and favors the near-academic group only slightly. The horizontal contrast (having any local ophthalmologist) is larger, and in the direction expected of greater diagnostic intensity.")) +
   coord_cartesian(ylim = c(0, 24)) + theme(legend.position = "top")
 ggsave("paper/figs/figA2_discordance.pdf", pA2, width = 7.6, height = 4.0)
 
@@ -127,37 +127,6 @@ pA3 <- ggplot(fa, aes(beta, spec)) +
        x = "Coefficient (negative = counties farther away have LESS severe disease)", y = NULL,
        caption = wrc("Every specification points the opposite way to the access hypothesis, which predicts a positive coefficient. Adjustment does not move it toward zero, and its magnitude is a fraction of the social-vulnerability coefficient."))
 ggsave("paper/figs/figA3_forest.pdf", pA3, width = 8.0, height = 3.4)
-
-# =========================================================================
-# FIGURE A4  university vs community programs
-# =========================================================================
-pairs <- read_csv("data_derived/county_program_drivetimes.csv", show_col_types = FALSE,
-                  col_types = cols(fips = "c", .default = col_guess()))
-progs <- read_csv("data_derived/programs_geocoded.csv", show_col_types = FALSE) %>%
-  mutate(yr = suppressWarnings(as.numeric(accred_year))) %>% filter(is.na(yr) | yr <= 2021) %>%
-  mutate(univ = grepl("School of Medicine|University|College of Medicine", name, ignore.case = TRUE))
-nb <- function(u) pairs %>% filter(prog_id %in% progs$prog_id[progs$univ == u], !is.na(drive_min)) %>%
-  group_by(fips) %>% summarise(m = min(drive_min), .groups = "drop")
-d4 <- dat %>%
-  left_join(nb(TRUE) %>% rename(univ_min = m), by = "fips") %>%
-  left_join(nb(FALSE) %>% rename(comm_min = m), by = "fips") %>%
-  filter(!is.na(univ_min), !is.na(comm_min)) %>%
-  mutate(z_univ = z(log1p(univ_min)), z_comm = z(log1p(comm_min)))
-m4 <- glm(as.formula(paste(Y, "~ z_univ + z_comm + z_svi + z_supply + z_ophth + z_optom + z_popdens + z_rucc + factor(stratum)")),
-          data = d4, family = quasibinomial())
-f4 <- bind_rows(
-  tibble(term = "Distance to nearest\nUNIVERSITY program", beta = getc(m4,"z_univ")[1], se = getc(m4,"z_univ")[2]),
-  tibble(term = "Distance to nearest\nCOMMUNITY HOSPITAL program", beta = getc(m4,"z_comm")[1], se = getc(m4,"z_comm")[2]))
-
-pA4 <- ggplot(f4, aes(beta, term)) +
-  geom_vline(xintercept = 0, linetype = 2, colour = "grey45") +
-  geom_errorbarh(aes(xmin = beta-1.96*se, xmax = beta+1.96*se), height = .1) +
-  geom_point(size = 2.6) +
-  labs(title = wr("Only proximity to university programs tracks disease severity"),
-       subtitle = wr("Both distances entered in the same model; they correlate 0.61, so they are separately identified", 95),
-       x = "Coefficient per SD of log drive time", y = NULL,
-       caption = sprintf("n = %s counties with both program types routable. Community-hospital proximity is associated with nothing at all,\nwhich is difficult to reconcile with a training-capacity mechanism and easier to reconcile with subspecialty diagnostic intensity.", format(n_distinct(d4$fips), big.mark=",")))
-ggsave("paper/figs/figA4_progtype.pdf", pA4, width = 7.6, height = 2.9)
 
 # =========================================================================
 # FIGURE B1  the post-stratification artifact
