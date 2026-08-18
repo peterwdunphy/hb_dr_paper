@@ -84,12 +84,13 @@ diabetes.
 \noindent\textbf{Results:} Nationally, 19.1\% of diagnosed DR was
 vision-threatening. Within demographic strata, each standard deviation increase
 in county social vulnerability was associated with higher odds of
-vision-threatening disease among people with DR (odds ratio 1.036, 95\% CI 1.032
-to 1.039; $p < 0.001$), corresponding to approximately 0.43 percentage points
+vision-threatening disease among people with DR (odds ratio 1.036, 95\% CI 1.023
+to 1.049; $p < 0.001$, cluster-robust), corresponding to approximately 0.43 percentage points
 per standard deviation. The gradient was consistent across all six race-by-age
-strata examined ($\beta$ 0.032 to 0.046). It was no smaller among adults aged 65
+strata examined ($\beta$ 0.032 to 0.046). It was only about 12\% smaller among adults aged 65
 to 84, who are near-universally Medicare eligible, than among adults aged 40 to
-64 (difference 0.004, $p = 0.18$). The association persisted under a Leroux
+64, though the interaction was statistically detectable and corresponded to
+only about a 12\% attenuation ($-0.0036$, $p = 0.002$). The association persisted under a Leroux
 conditional autoregressive model with strong residual spatial dependence
 ($\rho = 0.83$): SVI 0.021 (95\% credible interval 0.012 to 0.029). The gradient
 was unchanged by adjustment for Medicare imaging, evaluation and management, and
@@ -324,7 +325,18 @@ non-Hispanic White, non-Hispanic Black, and Hispanic adults, each in the 40 to
 across 3,111 counties. Eight of the 3,119 counties in the analytic sample have
 populations too small for VEHSS to publish race-stratified estimates and
 therefore contribute no cells; they are retained in county-level descriptive
-analyses only. Models include stratum fixed effects, so the social
+analyses only.
+
+Cell coverage is 13,035 of a possible 18,666. Missingness is driven by the size
+of the demographic group rather than by any property of the outcome: VEHSS does
+not publish an estimate where the county's population in that race-by-age cell
+is very small. Among counties with no non-Hispanic Black estimate for ages 65 to
+84, the median non-Hispanic Black population is 105, against 5,576 in counties
+where the estimate is published, and 95\% have fewer than 1,000. The
+corresponding medians for Hispanic adults are 420 against 6,128. The Black and
+Hispanic strata are therefore estimated on counties with substantial minority
+populations, which skew urban, and stratum-specific estimates should be read
+with that in mind. Models include stratum fixed effects, so the social
 vulnerability coefficient is identified only from differences between counties
 within the same race-by-age cell. County demographic composition cannot
 contribute to it.
@@ -405,7 +417,18 @@ county as an independent Bernoulli sequence.
 The primary model regressed the VTDR share on standardized SVI, drive time to
 the nearest residency program, drive time to the nearest ophthalmologist,
 ophthalmologist and optometrist density, population density, rurality, and
-stratum fixed effects. Continuous predictors were standardized, so coefficients
+stratum fixed effects.
+
+Because the analytic file stacks up to six race-by-age cells per county, and
+every county-level covariate is repeated across a county's cells, the
+quasibinomial dispersion parameter alone is not an adequate treatment of the
+resulting dependence: it rescales all standard errors by a single scalar
+without modeling the within-county correlation, and the effective sample size
+for a county-level covariate is nearer the 3,111 counties than the 13,035
+cells. All standard errors and confidence intervals for county-level covariates
+are therefore cluster-robust, clustered on county. This inflates them roughly
+fourfold relative to the model-based values and is the basis for every interval
+reported below. Continuous predictors were standardized, so coefficients
 are per standard deviation and directly comparable. Drive times were
 log-transformed.
 
@@ -498,7 +521,8 @@ demographic composition fixed.}
 Within demographic strata, higher county social vulnerability remained
 associated with a greater vision-threatening share of diagnosed DR
 (Table~\ref{tab:main}). Each standard deviation increase in SVI corresponded to
-an odds ratio of 1.036 (95\% CI 1.032 to 1.039; $p<0.001$), equivalent to
+an odds ratio of 1.036 (95\% CI 1.023 to 1.049; $p<0.001$, with standard errors
+clustered on county), equivalent to
 approximately 0.43 percentage points of VTDR share per standard deviation at the
 non-Hispanic White 65 to 84 baseline of 14.2\%.
 
@@ -521,11 +545,15 @@ race-by-age stratum.}
 
 If the social gradient in disease progression operated principally through
 insurance coverage, it should be attenuated among adults aged 65 to 84, for whom
-Medicare coverage is near-universal. It was not. Estimated within demographic
-strata, the SVI coefficient was 0.037 among adults aged 40 to 64 and 0.033
-among adults aged 65 to 84, a difference of 0.004 that did not approach
-significance ($z = 1.35$, $p = 0.18$). The same pattern held in each race
-stratum separately (Table~\ref{tab:strata}).
+Medicare coverage is near-universal. It was narrower, but only slightly.
+Estimated within demographic strata, the SVI coefficient was 0.037 among adults
+aged 40 to 64 and 0.033 among adults aged 65 to 84. Because the two age bands
+are drawn from the same counties, the correct test is an interaction within a
+single model rather than a comparison of separately fitted coefficients; that
+interaction is $-0.0036$ ($p = 0.002$, cluster-robust), an attenuation of
+approximately 12\%. Medicare eligibility is thus associated with a detectably
+but modestly shallower gradient, leaving roughly seven eighths of it intact. The
+same pattern held in each race stratum separately (Table~\ref{tab:strata}).
 
 \subsection{Geographic access}
 
@@ -538,6 +566,28 @@ nearest ophthalmologist was not associated with the outcome
 hypothesis, including capacity-weighted access, discordant-county comparisons,
 and university versus community program contrasts, are reported in the Appendix;
 none supported it.
+
+\subsection{Sensitivity to the racial component of SVI and to provider density}
+
+Because the overall SVI contains a racial and ethnic minority status theme, we
+refitted the primary model using a composite of the remaining three themes. The
+association persisted at 0.027 (95\% CI 0.015 to 0.040, $p<0.001$), about
+three quarters of the overall-SVI estimate. Entered alone, the socioeconomic
+status theme gave 0.034 (95\% CI 0.021 to 0.047).
+
+The minority status theme was nonetheless the strongest single component,
+whether entered alone (0.069) or jointly with the other three (0.071). We
+emphasize that this is not the post-stratification artifact, which within-stratum
+estimation removes by construction; it is a residual county-level association
+between racial composition and disease severity within demographic strata, and
+is consistent with the effects of residential segregation on care delivery
+rather than with a compositional artifact.
+
+Because VEHSS already adjusted its county random effects for ophthalmologists
+per capita, our adjustment for ophthalmologist and optometrist density is
+partly a second pass at the same factor. Removing those two terms moved the SVI
+coefficient from 0.035 to 0.038, a change of 7\%, so the double adjustment is
+not materially affecting the result.
 
 \subsection{Spatial confirmation}
 
@@ -846,11 +896,15 @@ gradients. We recommend within-stratum estimation as a routine safeguard.
 
 \subsection{Limitations}
 
-First, this is an ecological analysis of county aggregates; associations cannot
+First, coverage of the race-stratified cells is a function of demographic group
+size, so the Black and Hispanic stratum estimates rest on a more urban subset of
+counties than the non-Hispanic White estimates.
+
+Second, this is an ecological analysis of county aggregates; associations cannot
 be interpreted at the individual level, and the social vulnerability of a county
 is not the social circumstance of any patient within it.
 
-Second, and most importantly, the outcome is derived from modeled estimates
+Third, and most importantly, the outcome is derived from modeled estimates
 built on diagnosed disease in Medicare and Medicaid claims. Disease that is
 never diagnosed does not enter. If under-detection is more common in
 disadvantaged counties, and if it disproportionately removes mild cases from the
@@ -862,21 +916,21 @@ all-cause diagnostic activity rather than retinal screening specifically.
 Residual detection bias remains the principal threat, and its likely direction
 is to overstate our finding.
 
-Third, VEHSS county random effects were themselves estimated controlling for
+Fourth, VEHSS county random effects were themselves estimated controlling for
 ophthalmologists per capita. Including provider density as a covariate is
 therefore partly a second adjustment for a factor already partially removed from
 the outcome, which will tend to attenuate the estimated role of supply.
 
-Fourth, drive times model private vehicle travel on the road network. They
+Fifth, drive times model private vehicle travel on the road network. They
 ignore traffic, are unreliable across ferry routes, and do not represent public
 transportation at all. Fourteen island and remote counties in Alaska and Hawaii
 had no routable path and are excluded from access analyses.
 
-Fifth, indicator vintages are not perfectly aligned. DR estimates are for 2021,
+Sixth, indicator vintages are not perfectly aligned. DR estimates are for 2021,
 SVI is constructed from 2016--2020 data, and workforce counts are 2021. The
 glaucoma comparison reported in the Appendix is published only for 2022.
 
-Sixth, Puerto Rico is absent from the VEHSS source and is therefore unrepresented
+Seventh, Puerto Rico is absent from the VEHSS source and is therefore unrepresented
 here, as are any counties failing the completeness criteria.
 
 \subsection{Conclusion}

@@ -75,7 +75,7 @@ DR.
 distance from an academic program. It fell slightly and monotonically, from
 18.9\% in counties within 30 minutes of a program to 16.1\% in counties beyond
 four hours. The adjusted association was small and negative
-($\beta = -0.017$ per SD of log drive time, $p<0.001$) and did not attenuate
+($\beta = -0.017$ per SD of log drive time, 95\% CI $-0.028$ to $-0.007$) and did not attenuate
 under adjustment for provider supply, social vulnerability, Medicare diagnostic
 volume, or preventive screening. Counties with local ophthalmologists but far
 from an academic center had a vision-threatening share of 18.6\%, against 19.6\%
@@ -223,7 +223,11 @@ screening completion from County Health Rankings.\citep{chr}
 Models were quasibinomial generalized linear models with vision-threatening
 cases as successes and all-stage DR cases as trials; county aggregates of this
 kind are overdispersed, and the quasibinomial family scales standard errors
-accordingly. Continuous predictors were standardized and drive times
+accordingly. Because the analytic file stacks up to six race-by-age cells per
+county and repeats each county-level covariate across them, all standard errors
+for county-level covariates are additionally cluster-robust, clustered on
+county; this inflates them roughly fivefold for the drive-time coefficient
+relative to model-based values. Continuous predictors were standardized and drive times
 log-transformed, so coefficients are per standard deviation and comparable
 across exposures.
 
@@ -269,7 +273,8 @@ time to the nearest academic ophthalmology residency program.}
 \subsection{The association is small, negative, and does not attenuate}
 
 In the within-stratum model the coefficient on log drive time was $-0.017$ per
-standard deviation ($p<0.001$). It was essentially unchanged by adjustment for
+standard deviation (95\% CI $-0.028$ to $-0.007$, $p = 0.001$ with standard
+errors clustered on county). It was essentially unchanged by adjustment for
 general eye care proximity, provider density, population density, rurality,
 social vulnerability, Medicare diagnostic volume, and preventive screening
 completion (Figure~\ref{fig:a3}). A confounded association would be expected to

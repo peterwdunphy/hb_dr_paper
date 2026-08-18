@@ -51,11 +51,11 @@ presented as: what is tested conceptually, how we tested it, what we found, and
 how we interpret it.
 
 \medskip
-\noindent Tests 1, 3, 5, 6, 9, 10, 11 and 12 support the disparities manuscript
-(social vulnerability and progression). Tests 2, 13 and 14 are the evidence base
-for the companion manuscript on academic ophthalmology proximity. Tests 4, 7 and
-8 are diagnostics that constrain the interpretation of both. Every analysis
-reported in either manuscript appears here.
+\noindent Tests 1, 3, 5, 6, 9, 10, 11, 12, 16 and 17 support the disparities
+manuscript (social vulnerability and progression). Tests 2, 13 and 14 are the
+evidence base for the companion manuscript on academic ophthalmology proximity.
+Tests 4, 7, 8 and 15 are diagnostics that constrain the interpretation of both.
+Every analysis reported in either manuscript appears here.
 
 \medskip
 \noindent Unless stated otherwise, the outcome is the vision-threatening share
@@ -277,7 +277,11 @@ Age band & Mean VTDR share & $\beta_{\mathrm{SVI}}$ & SE \\
 \bottomrule
 \end{tabular}
 \end{center}
-Difference $0.004$; $z = 1.35$; $p = 0.18$. The same pattern holds within each
+Difference $0.004$. Estimated correctly as an interaction within a single model
+(the two age bands share counties, so separately fitted coefficients are
+correlated and a two-sample $z$ test is invalid), the SVI $\times$ age
+interaction is $-0.0036$ with a cluster-robust $p = 0.002$: a statistically
+detectable but modest attenuation of about 12\%. See Test~15. The same pattern holds within each
 race stratum (main text, Table 2): 0.034 versus 0.032 among non-Hispanic White
 adults, 0.037 versus 0.035 among non-Hispanic Black adults, 0.046 versus 0.037
 among Hispanic adults.
@@ -731,6 +735,114 @@ interpret it as the detection signature described in Tests~2 and~13: proximity
 to subspecialty capacity raises the measured share of disease that is
 vision-threatening by improving ascertainment, and no amount of covariate
 adjustment removes a feature that is built into how the outcome is ascertained.
+
+%=========================================================================
+\section{Within-county clustering}
+%=========================================================================
+
+\tpart{(1) What is tested.} The analytic file stacks up to six race-by-age
+cells per county, and SVI, drive time and provider density are identical across
+a county's cells. The quasibinomial family rescales all standard errors by one
+dispersion scalar; it does not model the correlation this induces. If that
+dependence is ignored, precision for county-level covariates will be
+overstated, because the effective sample size is nearer the 3,111 counties than
+the 13,035 cells.
+
+\tpart{(2) How we tested it.} We recomputed standard errors for the primary
+model using a cluster-robust (CR0) sandwich estimator clustered on county, and
+compared them with the model-based values.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Coefficient & $\beta$ & Model SE & Cluster SE & Inflation \\
+\midrule
+Social Vulnerability Index      & $0.0353$  & 0.0016 & 0.0062 & $3.9\times$ \\
+Drive time to residency program & $-0.0174$ & 0.0010 & 0.0053 & $5.1\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For SVI this moves $z$ from 22.1 to 5.7 and the 95\% confidence interval on the
+odds ratio from 1.032--1.039 to 1.023--1.049. For academic drive time $z$ moves
+from $-16.8$ to $-3.3$.
+
+\tpart{(4) Interpretation.} Both conclusions survive, but the precision
+originally reported was substantially overstated, and the corrected intervals
+are those given in both manuscripts. The clustered estimates are roughly what
+one would expect if county-level covariates carry closer to 3,111 than 13,035
+independent observations. We report cluster-robust intervals throughout rather
+than model-based ones.
+
+%=========================================================================
+\section{Does the gradient survive removing the racial component of SVI?}
+%=========================================================================
+
+\tpart{(1) What is tested.} The overall SVI incorporates a racial and ethnic
+minority status theme. Within-stratum estimation removes the post-stratification
+artifact of Test~1, but a reader may reasonably ask whether the surviving
+association is simply that racial composition re-entering through the exposure.
+
+\tpart{(2) How we tested it.} We refitted the primary model using a composite of
+the three non-racial themes (socioeconomic status, household characteristics,
+housing and transportation), then each theme alone, then all four jointly. All
+standard errors are clustered on county.
+
+\tpart{(3) What we found.}
+\begin{center}
+\begin{tabular}{lrrl}
+\toprule
+Exposure & $\beta$ & Cluster SE & 95\% CI \\
+\midrule
+Overall SVI (four themes)         & 0.0353 & 0.0062 & 0.023 to 0.048 \\
+SVI excluding Theme 3             & 0.0273 & 0.0063 & 0.015 to 0.040 \\
+Theme 1, socioeconomic, alone     & 0.0339 & 0.0066 & 0.021 to 0.047 \\
+Theme 3, minority status, alone   & 0.0693 & 0.0059 & 0.058 to 0.081 \\
+\midrule
+\multicolumn{4}{l}{\emph{All four entered jointly}}\\
+\quad Theme 1 socioeconomic       & 0.0232 & 0.0112 & 0.001 to 0.045 \\
+\quad Theme 2 household           & $-0.0249$ & 0.0085 & $-0.042$ to $-0.008$ \\
+\quad Theme 3 minority status     & 0.0714 & 0.0076 & 0.057 to 0.086 \\
+\quad Theme 4 housing/transport   & $-0.0130$ & 0.0096 & $-0.032$ to $0.006$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tpart{(4) Interpretation.} The association clearly survives removal of the
+racial theme, retaining roughly three quarters of its magnitude, and the
+socioeconomic theme alone reproduces nearly the full overall estimate. The
+finding is therefore not an artifact of racial composition re-entering through
+the exposure.
+
+The minority status theme is nonetheless the strongest single component. This
+should be stated plainly rather than buried: within demographic strata, and with
+the post-stratification pathway closed by design, county racial composition
+remains the strongest correlate of how advanced diagnosed diabetic retinopathy
+is. Because stratification holds the individual-level demographic mix fixed,
+this is a contextual association, most plausibly reflecting residential
+segregation and its consequences for where and how care is delivered, rather
+than the compositional artifact documented in Test~1.
+
+%=========================================================================
+\section{Provider-density double adjustment}
+%=========================================================================
+
+\tpart{(1) What is tested.} VEHSS estimated its county random effects
+controlling for ophthalmologists per capita. Our primary model adjusts for
+ophthalmologist and optometrist density again, so part of that adjustment is a
+second pass at a factor already partly removed from the outcome.
+
+\tpart{(2) How we tested it.} We refitted the primary model with and without the
+two provider-density terms, clustering on county.
+
+\tpart{(3) What we found.} With provider density, SVI $= 0.0353$ (95\% CI 0.023
+to 0.048). Without, SVI $= 0.0381$ (95\% CI 0.026 to 0.050). The difference is
+$-0.0028$, about 7\% of the coefficient.
+
+\tpart{(4) Interpretation.} The double adjustment is immaterial to the social
+gradient. We retain the provider-density terms because they are needed for the
+access analyses in the companion manuscript, and note that dropping them would
+if anything slightly strengthen the reported association.
 
 %=========================================================================
 \section{Data provenance and reproducibility}
