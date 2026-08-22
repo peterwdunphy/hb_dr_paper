@@ -7,6 +7,18 @@
 # -------------------------------------------------------------------------
 
 library(dplyr); library(readr); library(tidyr); library(ggplot2); library(sf)
+library(sandwich)
+
+# County-level covariates are repeated across a county's race-by-age cells, so
+# model-based standard errors understate uncertainty for them. Error bars in the
+# SVI-paper figures (figB*) use cluster-robust SEs clustered on county.
+# NOTE: this does NOT apply to figB2, where each stratum contributes exactly one
+# row per county (verified: cells/counties = 1.00), so there is no within-county
+# clustering to correct.
+getc_cl <- function(m, t, dd) {
+  V <- sandwich::vcovCL(m, cluster = dd$fips, type = "HC0")
+  c(unname(coef(m)[t]), unname(sqrt(V[t, t])))
+}
 
 dir.create("paper/figs", recursive = TRUE, showWarnings = FALSE)
 z <- function(x) as.numeric(scale(x))
@@ -135,10 +147,12 @@ m_un <- glm(cbind(vtdr_cases, pmax(dr_cases-vtdr_cases,0)) ~ z_svi + scale(ophth
               scale(optom_per_100k) + scale(log_pop_dens) + scale(rucc) + scale(log_drive),
             data = d %>% mutate(z_svi = z(svi_overall)), family = quasibinomial())
 m_st <- qb(paste("z_svi +", CTRL))
+# the unstratified model has one row per county, so no clustering is needed
+# there; the within-stratum model does.
 art <- tibble(spec = c("Published county estimates\n(demographic composition varies)",
                        "Within race x age strata\n(composition held fixed)"),
-              beta = c(coef(m_un)["z_svi"], coef(m_st)["z_svi"]),
-              se   = c(summary(m_un)$coefficients["z_svi",2], summary(m_st)$coefficients["z_svi",2])) %>%
+              beta = c(coef(m_un)["z_svi"], getc_cl(m_st, "z_svi", dat)[1]),
+              se   = c(summary(m_un)$coefficients["z_svi",2], getc_cl(m_st, "z_svi", dat)[2])) %>%
   mutate(spec = factor(spec, levels = spec))
 
 pB1 <- ggplot(art, aes(spec, beta)) +
@@ -152,7 +166,7 @@ pB1 <- ggplot(art, aes(spec, beta)) +
   labs(title = wr("Most of the apparent social gradient in county DR estimates is a measurement artifact"),
        subtitle = wr("Social vulnerability coefficient on the vision-threatening share, before and after holding demographic composition fixed", 95),
        x = NULL, y = "Coefficient per SD of\nsocial vulnerability (log-odds)",
-       caption = wrc("VEHSS builds county estimates by applying national race- and age-specific rates to each county's population mix, so county demographics move the estimate mechanically. Estimating within race x age strata removes that pathway by design.")) +
+       caption = wrc("VEHSS builds county estimates by applying national race- and age-specific rates to each county's population mix, so county demographics move the estimate mechanically. Estimating within race x age strata removes that pathway by design. The within-stratum interval uses standard errors clustered on county.")) +
   coord_cartesian(ylim = c(0, .165))
 ggsave("paper/figs/figB1_artifact.pdf", pB1, width = 7.6, height = 3.9)
 
@@ -175,7 +189,7 @@ pB2 <- ggplot(het, aes(beta, reorder(lab, beta))) +
   labs(title = wr("The social gradient replicates in every demographic stratum"),
        subtitle = wr("Social vulnerability coefficient estimated separately within each race-by-age group", 95),
        x = "Coefficient per SD of social vulnerability (log-odds)", y = NULL,
-       caption = sprintf("Dashed line is the pooled within-stratum estimate (%.3f). The same association appears in White, Black and Hispanic\npopulations and in both age bands, which argues against its being an artifact of any one population.", pooled))
+       caption = wrc(sprintf("Dashed line is the pooled within-stratum estimate (%.3f). The same association appears in White, Black and Hispanic populations and in both age bands, which argues against its being an artifact of any one population. Each stratum contributes exactly one observation per county, so no clustering correction applies to these intervals.", pooled)))
 ggsave("paper/figs/figB2_strata.pdf", pB2, width = 7.6, height = 3.2)
 
 # =========================================================================
@@ -186,10 +200,10 @@ d2 <- dat %>% filter(!is.na(mammography), !is.na(uninsured), !is.na(dual_pct),
   mutate(z_img = z(imaging_p1k), z_em = z(em_p1k), z_tst = z(tests_p1k),
          z_mam = z(mammography), z_unins = z(uninsured), z_dual = z(dual_pct))
 mech <- bind_rows(
-  tibble(step = "Base model",                         v = list(getc(glm(as.formula(paste(Y,"~ z_svi +",CTRL)), d2, family=quasibinomial()),"z_svi"))),
-  tibble(step = "+ insurance coverage\n(uninsured, dual-eligible)", v = list(getc(glm(as.formula(paste(Y,"~ z_svi + z_unins + z_dual +",CTRL)), d2, family=quasibinomial()),"z_svi"))),
-  tibble(step = "+ diagnostic volume\n(Medicare imaging, E&M, tests)", v = list(getc(glm(as.formula(paste(Y,"~ z_svi + z_img + z_em + z_tst +",CTRL)), d2, family=quasibinomial()),"z_svi"))),
-  tibble(step = "+ preventive screening\n(mammography completion)", v = list(getc(glm(as.formula(paste(Y,"~ z_svi + z_mam +",CTRL)), d2, family=quasibinomial()),"z_svi")))
+  tibble(step = "Base model",                         v = list(getc_cl(glm(as.formula(paste(Y,"~ z_svi +",CTRL)), d2, family=quasibinomial()),"z_svi",d2))),
+  tibble(step = "+ insurance coverage\n(uninsured, dual-eligible)", v = list(getc_cl(glm(as.formula(paste(Y,"~ z_svi + z_unins + z_dual +",CTRL)), d2, family=quasibinomial()),"z_svi",d2))),
+  tibble(step = "+ diagnostic volume\n(Medicare imaging, E&M, tests)", v = list(getc_cl(glm(as.formula(paste(Y,"~ z_svi + z_img + z_em + z_tst +",CTRL)), d2, family=quasibinomial()),"z_svi",d2))),
+  tibble(step = "+ preventive screening\n(mammography completion)", v = list(getc_cl(glm(as.formula(paste(Y,"~ z_svi + z_mam +",CTRL)), d2, family=quasibinomial()),"z_svi",d2)))
 ) %>% mutate(beta = sapply(v, `[`, 1), se = sapply(v, `[`, 2),
              step = factor(step, levels = rev(step))) %>% select(-v)
 
@@ -201,7 +215,7 @@ pB3 <- ggplot(mech, aes(beta, step)) +
   labs(title = wr("Preventive-screening engagement moves the gradient; coverage and diagnostic volume do not"),
        subtitle = wr("Social vulnerability coefficient after adding each set of external covariates, common sample", 95),
        x = "Coefficient per SD of social vulnerability (log-odds)", y = NULL,
-       caption = wrc("Mammography completion has no ophthalmic content; it measures whether a county's population completes recommended screening at all. It absorbs ~40% of the gradient, while insurance coverage and diagnostic volume absorb essentially none."))
+       caption = wrc("Mammography completion has no ophthalmic content; it measures whether a county's population completes recommended screening at all. It absorbs ~40% of the gradient, while insurance coverage and diagnostic volume absorb essentially none. Intervals use standard errors clustered on county."))
 ggsave("paper/figs/figB3_mechanism.pdf", pB3, width = 8.6, height = 3.8)
 
 # =========================================================================

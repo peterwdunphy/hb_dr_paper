@@ -26,3 +26,8 @@ paper/*.fls
 paper/*.fdb_latexmk
 
 .DS_Store
+
+# latexdiff output (regenerate with paper/make_diff.sh)
+paper/*_diff.tex
+paper/*_diff.pdf
+paper/*.blog
